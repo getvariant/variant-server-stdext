@@ -16,8 +16,8 @@
     <name>Petclinic Server Extensions</name>
     <packaging>jar</packaging>
     <groupId>com.variant</groupId>
-    <artifactId>java-servlet-demo-server</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>server-extensions-demo</artifactId>
+    <version>0.7.1</version>
     
     <dependencies>
         
