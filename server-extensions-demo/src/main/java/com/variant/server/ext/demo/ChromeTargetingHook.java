@@ -35,10 +35,10 @@ public class ChromeTargetingHook implements UserHook<TestTargetingLifecycleEvent
 	public UserHook.PostResult post(TestTargetingLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getStateRequest().getSession();
-		LOG.debug(ssn.getAttribute("user-agent"));
+		//LOG.debug(ssn.getAttribute("user-agent"));
 		if (ssn.getAttribute("user-agent").matches(".*Chrome.*")) {
 			Experience exp = event.getTest().getControlExperience();
-			LOG.debug("Targeted Chrome session [" + ssn.getId() + "] to experience [" + exp.getName() + "] in test [" + event.getTest().getName() + "]");
+			LOG.debug("Targeted Chrome session [" + ssn.getId() + "] to control experience [" + exp.getName() + "] in test [" + event.getTest().getName() + "]");
 			TestTargetingLifecycleEventPostResult result = PostResultFactory.mkPostResult(event);
 			result.setTargetedExperience(exp);
 			return result;
