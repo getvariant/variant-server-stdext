@@ -9,7 +9,6 @@ import com.variant.core.schema.Hook;
 import com.variant.server.api.Session;
 import com.variant.server.api.hook.PostResultFactory;
 import com.variant.server.api.hook.TestQualificationLifecycleEvent;
-import com.variant.server.api.hook.TestQualificationLifecycleEventPostResult;
 
 /**
  * User hook to disqualify traffic from Firefox browsers.
@@ -33,10 +32,9 @@ public class FirefoxDisqualHook implements UserHook<TestQualificationLifecycleEv
 	public UserHook.PostResult post(TestQualificationLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getStateRequest().getSession();
-		//LOG.debug(ssn.getAttribute("user-agent"));
 		if (ssn.getAttribute("user-agent").matches(".*Firefox.*")) {
 			LOG.debug("Disqualified Firefox session [" + ssn.getId() + "]");
-			TestQualificationLifecycleEventPostResult result = PostResultFactory.mkPostResult(event);
+			TestQualificationLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
 			result.setQualified(false);
 			return result;
 		}

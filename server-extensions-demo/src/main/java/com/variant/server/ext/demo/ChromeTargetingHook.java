@@ -10,7 +10,6 @@ import com.variant.core.schema.Test.Experience;
 import com.variant.server.api.Session;
 import com.variant.server.api.hook.PostResultFactory;
 import com.variant.server.api.hook.TestTargetingLifecycleEvent;
-import com.variant.server.api.hook.TestTargetingLifecycleEventPostResult;
 
 
 /**
@@ -39,7 +38,7 @@ public class ChromeTargetingHook implements UserHook<TestTargetingLifecycleEvent
 		if (ssn.getAttribute("user-agent").matches(".*Chrome.*")) {
 			Experience exp = event.getTest().getControlExperience();
 			LOG.debug("Targeted Chrome session [" + ssn.getId() + "] to control experience [" + exp.getName() + "] in test [" + event.getTest().getName() + "]");
-			TestTargetingLifecycleEventPostResult result = PostResultFactory.mkPostResult(event);
+			TestTargetingLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
 			result.setTargetedExperience(exp);
 			return result;
 		}
