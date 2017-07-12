@@ -21,17 +21,29 @@
     
     <dependencies>
         
-        <!-- Variant Server API -->        
+        <!-- 
+           Variant Server API 
+           Must be installed in the local Maven repository manually: 
+
+           mvn install:install-file -Dfile=lib/variant-server-api-0.7.1.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-api -Dversion=0.7.1 -Dpackaging=jar
+        -->        
         <dependency>
 			  <groupId>com.variant</groupId>
-			  <artifactId>server-api</artifactId>
+			  <artifactId>variant-server-api</artifactId>
 			  <version>0.7.1</version>
 		  </dependency>
 
-        <!-- Variant Core -->        
+        <!-- 
+           Variant Core Library.
+           Must be installed in the local Maven repository manually: 
+
+           mvn install:install-file -Dfile=lib/variant-core-0.7.1.jar -DgroupId=com.variant \
+                -DartifactId=variant-core -Dversion=0.7.1 -Dpackaging=jar
+        -->        
         <dependency>
            <groupId>com.variant</groupId>
-           <artifactId>core</artifactId>
+           <artifactId>variant-core</artifactId>
            <version>0.7.1</version>
         </dependency>
                 
