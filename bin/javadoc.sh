@@ -10,8 +10,6 @@ javadoc_dir=${root_dir}/docs
 
 rm -rf ${javadoc_dir}/*
 
-ls ${root_dir}/server-extensions-demo/src/main/java
-
 javadoc -d ${javadoc_dir}  \
    -sourcepath ${root_dir}/server-extensions-demo/src/main/java \
    -windowtitle "Variant ${version}" \
