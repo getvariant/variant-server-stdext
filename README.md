@@ -1,5 +1,8 @@
-# Variant Experiment Server 0.7.1
-## Server Extension API (ExtAPI) Sample Objects
+# Variant Experiment Server Extension API (ExtAPI) Sample Objects
+### Release 0.7.1
+#### Requires: Java 7 or later
+
+[__Documentation__](http://www.getvariant.com/docs/0-7/experiment-server/server-user-guide/#section-8) | [__Javadoc__](https://getvariant.github.io/variant-server-extapi/)
 
 [Variant Experiment Server](http://www.getvariant.com/docs/0-7/experiment-server/server-user-guide/) enables software developers conduct sophisticated, full-stack, feature-scoped online experiments on interactive, human facing computer applications. The need for such experiments frequently arises when it is desirable to measure business impact of a change to user experience. A typical example is an eCommerce Web application: a change to the check-out experience will likely have a direct impact on sales. Variant server enables application developers to validate a proposed update to user experience by running it in parallel with the existing experience, as a [randomized controlled experiment](https://en.wikipedia.org/wiki/Randomized_controlled_trial), where the update is the treatment and the existing experience servers as the control.
 
