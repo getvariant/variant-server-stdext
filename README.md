@@ -10,5 +10,4 @@ Variant server’s functionality can be extended through the use of the [server-
 
 Variant server's ExtAPI is provided in the variant-server-extapi-\<release\>.jar, found in this repository in [/lib](https://github.com/getvariant/variant-server-extapi/tree/release/0.7.1/lib) along with its dependent libraries. Refer to [Variant Server Reference Guide](http://www.getvariant.com/docs/0-7/experiment-server/reference/#section-3.1) for details on how to setup your ExtAPI development Environment.
 
-#### Requires Java 7 or later.
 Updated on 19 July 2017 for release 0.7.1.

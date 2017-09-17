@@ -34,7 +34,6 @@ public class ChromeTargetingHook implements UserHook<TestTargetingLifecycleEvent
 	public UserHook.PostResult post(TestTargetingLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getStateRequest().getSession();
-		//LOG.debug(ssn.getAttribute("user-agent"));
 		if (ssn.getAttribute("user-agent").matches(".*Chrome.*")) {
 			Experience exp = event.getTest().getControlExperience();
 			LOG.info("Targeted Chrome session [" + ssn.getId() + "] to control experience [" + exp.getName() + "] in test [" + event.getTest().getName() + "]");
@@ -42,7 +41,7 @@ public class ChromeTargetingHook implements UserHook<TestTargetingLifecycleEvent
 			result.setTargetedExperience(exp);
 			return result;
 		}
-		// Other qual hooks may still disqualify.
+		// Delegate down the chain.
 		else return null;
 	}
 
