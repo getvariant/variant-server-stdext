@@ -33,7 +33,7 @@ public class FirefoxDisqualHook implements UserHook<TestQualificationLifecycleEv
 
 		Session ssn = event.getStateRequest().getSession();
 		if (ssn.getAttribute("user-agent").matches(".*Firefox.*")) {
-			LOG.debug("Disqualified Firefox session [" + ssn.getId() + "]");
+			LOG.info("Disqualified Firefox session [" + ssn.getId() + "]");
 			TestQualificationLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
 			result.setQualified(false);
 			return result;
