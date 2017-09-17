@@ -25,8 +25,8 @@
            Variant Server API 
            Must be installed in the local Maven repository manually: 
 
-           mvn install:install-file -Dfile=lib/variant-server-api-0.7.1.jar -DgroupId=com.variant \
-                -DartifactId=variant-server-api -Dversion=0.7.1 -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-server-extapi-0.7.1.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-extapi -Dversion=0.7.1 -Dpackaging=jar
         -->        
         <dependency>
 			  <groupId>com.variant</groupId>
