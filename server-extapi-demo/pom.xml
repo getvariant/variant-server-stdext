@@ -17,7 +17,7 @@
     <packaging>jar</packaging>
     <groupId>com.variant</groupId>
     <artifactId>server-extapi-demo</artifactId>
-    <version>0.7.1</version>
+    <version>0.8.0</version>
     
     <dependencies>
         
@@ -25,26 +25,26 @@
            Variant Server API 
            Must be installed in the local Maven repository manually: 
 
-           mvn install:install-file -Dfile=lib/variant-server-extapi-0.7.1.jar -DgroupId=com.variant \
-                -DartifactId=variant-server-extapi -Dversion=0.7.1 -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-server-extapi-0.8.0.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-extapi -Dversion=0.8.0 -Dpackaging=jar
         -->        
         <dependency>
 			  <groupId>com.variant</groupId>
 			  <artifactId>variant-server-extapi</artifactId>
-			  <version>0.7.1</version>
+			  <version>0.8.0</version>
 		  </dependency>
 
         <!-- 
            Variant Core Library.
            Must be installed in the local Maven repository manually: 
 
-           mvn install:install-file -Dfile=lib/variant-core-0.7.1.jar -DgroupId=com.variant \
-                -DartifactId=variant-core -Dversion=0.7.1 -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-core-0.8.0.jar -DgroupId=com.variant \
+                -DartifactId=variant-core -Dversion=0.8.0 -Dpackaging=jar
         -->        
         <dependency>
            <groupId>com.variant</groupId>
            <artifactId>variant-core</artifactId>
-           <version>0.7.1</version>
+           <version>0.8.0</version>
         </dependency>
                 
         <!-- Logging -->
