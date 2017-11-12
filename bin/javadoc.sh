@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Generate Javadoc for this repo.
+# Probably not needed.
 # 
 
 
