@@ -1,6 +1,6 @@
 # Variant Experiment Server Extension API (ExtAPI) Sample Objects
-### Release 0.8.0
-#### Requires: Java 7 or later
+### Release 0.8.1
+#### Requires: Java 8 or later
 
 [__Documentation__](http://www.getvariant.com/docs/0-8/experiment-server/user-guide/#section-9) | [__Javadoc__](http://www.getvariant.com/javadoc/0.8/)
 
