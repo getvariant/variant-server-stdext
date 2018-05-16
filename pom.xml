@@ -17,7 +17,7 @@
     <name>Variant Experiment Server ExtAPI </name>
     <packaging>jar</packaging>
     <groupId>com.variant</groupId>
-    <artifactId>variant-extapi-custom</artifactId>
+    <artifactId>variant-extapi-demo</artifactId>
     <version>0.8.1</version>
     
     <dependencies>
