@@ -4,18 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.Config;
-import com.variant.core.UserHook;
+import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.core.schema.Test.Experience;
 import com.variant.server.api.PostResultFactory;
 import com.variant.server.api.Session;
-import com.variant.server.lce.TestTargetingLifecycleEvent;
+import com.variant.server.lifecycle.TestTargetingLifecycleEvent;
 
 
 /**
- * User hook to target traffic from chrome browsers to control.
+ * Life-cycle hook to target traffic from Chrome browsers to control.
  * Users with Chrome browsers will participate in the experiment, but always routed to control.
  */
-public class ChromeTargetingHook implements UserHook<TestTargetingLifecycleEvent> {
+public class ChromeTargetingHook implements LifecycleHook<TestTargetingLifecycleEvent> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ChromeTargetingHook.class);
 	
@@ -29,7 +29,7 @@ public class ChromeTargetingHook implements UserHook<TestTargetingLifecycleEvent
 	}
 
 	@Override
-	public UserHook.PostResult post(TestTargetingLifecycleEvent event) throws Exception {
+	public LifecycleHook.PostResult post(TestTargetingLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getSession();
 		if (ssn.getAttribute("user-agent").matches(".*Chrome.*")) {

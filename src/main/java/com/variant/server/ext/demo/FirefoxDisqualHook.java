@@ -4,16 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.Config;
-import com.variant.core.UserHook;
+import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.server.api.PostResultFactory;
 import com.variant.server.api.Session;
-import com.variant.server.lce.TestQualificationLifecycleEvent;
+import com.variant.server.lifecycle.TestQualificationLifecycleEvent;
 
 /**
- * User hook to disqualify traffic from Firefox browsers.
+ * Life-cycle hook to disqualify traffic from Firefox browsers.
  * Users with Firefox browsers will not participate in the experiment.
  */
-public class FirefoxDisqualHook implements UserHook<TestQualificationLifecycleEvent> {
+public class FirefoxDisqualHook implements LifecycleHook<TestQualificationLifecycleEvent> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FirefoxDisqualHook.class);
 	
@@ -27,7 +27,7 @@ public class FirefoxDisqualHook implements UserHook<TestQualificationLifecycleEv
 	}
 
 	@Override
-	public UserHook.PostResult post(TestQualificationLifecycleEvent event) throws Exception {
+	public LifecycleHook.PostResult post(TestQualificationLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getSession();
 		if (ssn.getAttribute("user-agent").matches(".*Firefox.*")) {
