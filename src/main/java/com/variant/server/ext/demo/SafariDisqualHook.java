@@ -30,7 +30,8 @@ public class SafariDisqualHook implements LifecycleHook<TestQualificationLifecyc
 	public LifecycleHook.PostResult post(TestQualificationLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getSession();
-		if (ssn.getAttribute("user-agent").matches(".*Safari.*")) {
+		String ua = ssn.getAttribute("user-agent");
+		if (ua.matches(".*Safari.*") && !ua.matches(".*Chrome.*")) {
 			LOG.info("Disqualified Safari session [" + ssn.getId() + "]");
 			TestQualificationLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
 			result.setQualified(false);
