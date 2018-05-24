@@ -13,11 +13,11 @@ import com.variant.server.lifecycle.TestQualificationLifecycleEvent;
  * Life-cycle hook to disqualify traffic from Firefox browsers.
  * Users with Firefox browsers will not participate in the experiment.
  */
-public class FirefoxDisqualHook implements LifecycleHook<TestQualificationLifecycleEvent> {
+public class SafariDisqualHook implements LifecycleHook<TestQualificationLifecycleEvent> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(FirefoxDisqualHook.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SafariDisqualHook.class);
 	
-	public FirefoxDisqualHook(Config config) {
+	public SafariDisqualHook(Config config) {
 		// No configuration.
 	}
 
@@ -30,8 +30,8 @@ public class FirefoxDisqualHook implements LifecycleHook<TestQualificationLifecy
 	public LifecycleHook.PostResult post(TestQualificationLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getSession();
-		if (ssn.getAttribute("user-agent").matches(".*Firefox.*")) {
-			LOG.info("Disqualified Firefox session [" + ssn.getId() + "]");
+		if (ssn.getAttribute("user-agent").matches(".*Safari.*")) {
+			LOG.info("Disqualified Safari session [" + ssn.getId() + "]");
 			TestQualificationLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
 			result.setQualified(false);
 			return result;
