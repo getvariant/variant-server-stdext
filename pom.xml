@@ -11,6 +11,7 @@
 	<properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
     	<tomcat.version>7.0.59</tomcat.version>
+        <variant.version>0.9.0</variant.version>
     	
     </properties>
 
@@ -18,34 +19,34 @@
     <packaging>jar</packaging>
     <groupId>com.variant</groupId>
     <artifactId>variant-extapi-demo</artifactId>
-    <version>0.8.1</version>
+    <version>${variant.version}</version>
     
     <dependencies>
         
         <!-- 
-           Variant Server API 
+           Variant Extension API 
            Must be installed in the local Maven repository manually: 
 
-           mvn install:install-file -Dfile=lib/variant-server-extapi-0.8.1.jar -DgroupId=com.variant \
-                -DartifactId=variant-server-extapi -Dversion=0.8.1 -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-server-extapi-0.9.0.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-extapi -Dversion=0.9.0 -Dpackaging=jar
         -->        
         <dependency>
 			  <groupId>com.variant</groupId>
 			  <artifactId>variant-server-extapi</artifactId>
-			  <version>0.8.1</version>
+			  <version>${variant.version}</version>
 		  </dependency>
 
         <!-- 
            Variant Core Library.
            Must be installed in the local Maven repository manually: 
 
-           mvn install:install-file -Dfile=lib/variant-core-0.8.1.jar -DgroupId=com.variant \
-                -DartifactId=variant-core -Dversion=0.8.1 -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-core-0.9.0.jar -DgroupId=com.variant \
+                -DartifactId=variant-core -Dversion=0.9.0 -Dpackaging=jar
         -->        
         <dependency>
            <groupId>com.variant</groupId>
            <artifactId>variant-core</artifactId>
-           <version>0.8.1</version>
+           <version>${variant.version}</version>
         </dependency>
                 
         <!-- Logging -->
