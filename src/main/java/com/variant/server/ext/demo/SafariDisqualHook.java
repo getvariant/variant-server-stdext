@@ -7,7 +7,7 @@ import com.typesafe.config.Config;
 import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.server.api.PostResultFactory;
 import com.variant.server.api.Session;
-import com.variant.server.lifecycle.TestQualificationLifecycleEvent;
+import com.variant.server.api.lifecycle.TestQualificationLifecycleEvent;
 
 /**
  * Life-cycle hook to disqualify traffic from Firefox browsers.
