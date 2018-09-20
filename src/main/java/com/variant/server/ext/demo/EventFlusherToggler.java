@@ -10,8 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.Config;
+import com.variant.core.schema.Test;
 import com.variant.server.api.EventFlusher;
-import com.variant.server.api.FlushableEvent;
+import com.variant.server.api.FlushableTraceEvent;
 
 /**
  * An implementation of {@link EventFlusher}, which shuts down a toggle 
@@ -47,11 +48,12 @@ public class EventFlusherToggler implements EventFlusher {
 	}
 
 	@Override
-	public void flush(Collection<FlushableEvent> events) throws Exception {
+	public void flush(Collection<FlushableTraceEvent> events) throws Exception {
 
-		for (FlushableEvent event: events) {
+		for (FlushableTraceEvent event: events) {
 			
-			if (Boolean.parseBoolean(event.getSession().getAttribute(attrName))) {
+			if (Boolean.parseBoolean(event.getSession().getAttribute(attrName)) &&
+					event.getSession().getSchema().getTest("ViewAsJsonFix").isOn()) {
 			
 				StringBuffer newSchema = new StringBuffer();
 				
@@ -79,7 +81,7 @@ public class EventFlusherToggler implements EventFlusher {
 				schemaOut.close();
 			}
 			else {
-				LOG.info(String.format("Ignored trace event [%s] [%s]", event.getName(), event.getValue()));
+				LOG.info(String.format("Ignored trace event [%s]", event.getName()));
 			}
 			
 		}
