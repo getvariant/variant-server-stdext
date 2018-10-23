@@ -39,7 +39,7 @@ public class ChromeTargetingHook implements LifecycleHook<VariationTargetingLife
 			result.setTargetedExperience(exp);
 			return result;
 		}
-		// Delegate down the chain.
+		// Not Chrome - delegate down the chain.
 		else return null;
 	}
 
