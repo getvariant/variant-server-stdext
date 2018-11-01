@@ -105,12 +105,11 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 			preparedInsert.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 			try {
 				preparedInsert.execute();
-				preparedInsert.execute();
 				return postResult;
 			}
 			catch (SQLException ex) {
 				if (ex.getErrorCode() == 1062) {
-					// Duplicate primary key due to a phantom row.  Re-read.
+					// Duplicate primary key due to a phantom row: all good, just re-read.
 					rs = preparedRead.executeQuery();
 					rs.next();
 					String expName = rs.getString(1);
