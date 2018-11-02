@@ -1,11 +1,42 @@
-# Variant Experiment Server Extension API (ExtAPI) Sample Objects
-### Release 0.8.1
+# Variant Experience Server Extension API (ExtAPI) Sample Objects
+### Release 0.9.3
 #### Requires: Java 8 or later
 
-[__Documentation__](http://www.getvariant.com/docs/0-8/experiment-server/user-guide/#section-9) | [__Javadoc__](http://www.getvariant.com/javadoc/0.8/)
+[__Documentation__](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4) | [__Javadoc__](https://www.getvariant.com/javadoc/0.9/)
 
-[Variant Experiment Server](http://www.getvariant.com/docs/0-8/experiment-server/user-guide/) enables software developers conduct sophisticated, full-stack, feature-scoped online experiments on interactive, human facing computer applications. The need for such experiments frequently arises when it is desirable to measure business impact of a change to user experience. A typical example is an eCommerce Web application: a change to the check-out experience will likely have a direct impact on sales. Variant server enables application developers to validate a proposed update to user experience by running it in parallel with the existing experience, as a [randomized controlled experiment](https://en.wikipedia.org/wiki/Randomized_controlled_trial), where the update is the treatment and the existing experience servers as the control.
+This project provides a development environment for the [Variant Experience Server's](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/) [server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4), used for injecting custom semantics into the server’s regular execution path. It exposes two principal mechanisms for injecting custom semantics into the server's default behavior:
 
-Variant server’s functionality can be extended through the use of the [server-side extension API, or ExtAPI](http://www.getvariant.com/docs/0-8/experiment-server/user-guide/#section-9), which provides a systematic mechanism for injecting custom semantics into the server’s regular execution path. 
+* Life-cycle Hooks are callback methods that can be subscribed to the life-cycle events. This enables custom, application-aware semantics to take over and alter the default behavior.
 
-Variant server's ExtAPI is provided in the variant-server-extapi-\<release\>.jar, found in this repository in [/lib](https://github.com/getvariant/variant-server-extapi/tree/master/lib) along with its dependent libraries. Refer to [Variant Server Reference Guide](http://www.getvariant.com/docs/0-8/experiment-server/reference/#section-4.1) for details on how to setup your ExtAPI development Environment.
+* Event Flushers allow the application developer to define the persistence details of the trace events on the schema-by-schema basis.
+
+Both life-cycle hooks and event flushers are configured in the experiment schema.
+
+Start by clonining this repository into a local workspace:
+
+```
+% git clone https://github.com/getvariant/variant-server-extapi.git
+```
+
+The Variant ExtAPI is provided in the `lib/variant-server-extapi-\<release\>.jar` JAR file and the dependent library `lib/variant-core-\<release\>.jar`. You may either directly import these into your project or, if you use a dependency management tool like Maven, install them into your local Maven repository:
+
+```
+% mvn install:install-file -Dfile=/path/to/variant-server-extapi-<release>.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-extapi -Dversion=<release> -Dpackaging=jar
+
+% mvn install:install-file -Dfile=/path/to/variant-core-<release>.jar -DgroupId=com.variant \
+                -DartifactId=variant-core -Dversion=<release> -Dpackaging=jar
+```
+
+Note that the repository contains several sample objects in `/src/main/java/com/variant/server/ext/demo/`. These are provided for illustration only and can be removed if you don't need them.
+
+To make your extension classes available to Variant server at run time, you must package them into a JAR file and copy the jar file into Variant server's `ext/` directory, along with all the dependencies.
+
+To package objects in this repository:
+
+```
+% mvn package
+```
+
+This will build the distribution JAR file in the `target/` directory, which you need to copy into Variant server's `ext/` directory, along with all the dependencies.
+
