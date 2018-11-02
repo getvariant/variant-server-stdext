@@ -18,7 +18,7 @@ Start by clonining this repository into a local workspace:
 % git clone https://github.com/getvariant/variant-server-extapi.git
 ```
 
-The Variant ExtAPI is provided in the lib/variant-server-extapi-\<release\>.jar JAR file and the dependent Variant core library lib/variant-core-\<release\>.jar. You may either directly import these into your project or, if you use a dependency management tool like Maven, install them into your local Maven repository:
+The Variant ExtAPI is provided in the `lib/variant-server-extapi-\<release\>.jar` JAR file and the dependent library `lib/variant-core-\<release\>.jar`. You may either directly import these into your project or, if you use a dependency management tool like Maven, install them into your local Maven repository:
 
 ```
 % mvn install:install-file -Dfile=/path/to/variant-server-extapi-<release>.jar -DgroupId=com.variant \
@@ -28,17 +28,15 @@ The Variant ExtAPI is provided in the lib/variant-server-extapi-\<release\>.jar 
                 -DartifactId=variant-core -Dversion=<release> -Dpackaging=jar
 ```
 
-Note the  repository also contains the extension objects used by the Petclinic demo application . These are provided for illustration only and can be removed if you don't need them.
+Note that the repository contains several sample objects in `/src/main/java/com/variant/server/ext/demo/`. These are provided for illustration only and can be removed if you don't need them.
 
-You must make your extension classes available to Variant server by adding them to the server's runtime classpath. The simplest and recommended way of doing so is:
+To make your extension classes available to Variant server at run time, you must package them into a JAR file and copy the jar file into Variant server's `ext/` directory, along with all the dependencies.
 
-    Package your extension classes in JAR file.
-    Copy the JAR file to the server's ext/ directory.
-    Restart Variant server. 
+To package objects in this repository:
 
-Note, that if you're using Maven, you may take advantage of the included pom.xml file to package your extension classes:
-
+```
 % mvn package
+```
 
-This will build the distribution target/variant-extapi-custom-<release>.jar JAR file, which must be copied to the server's ext/ directory.
+This will build the distribution JAR file in the `target/` directory, which you need to copy into Variant server's `ext/` directory, along with all the dependencies.
 
