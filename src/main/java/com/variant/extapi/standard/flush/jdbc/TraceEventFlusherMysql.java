@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
@@ -27,6 +30,8 @@ import com.variant.server.api.TraceEventFlusher;
  */
 public class TraceEventFlusherMysql extends TraceEventFlusherJdbc {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(TraceEventFlusherMysql.class);
+	
 	private Connection conn = null;
 
 	public TraceEventFlusherMysql(Config config) throws Exception {
@@ -41,11 +46,12 @@ public class TraceEventFlusherMysql extends TraceEventFlusherJdbc {
 		String password = config.getString("password");
 		if (password == null) throw new ServerException("Missing configuration property [password]");
 
-		Properties props = new Properties();
-		props.setProperty("user", user);
-		props.setProperty("password", password);
-		conn = DriverManager.getConnection(url, props);		
-		
+		if (LOG.isDebugEnabled())
+			LOG.debug(String.format(
+					"Connecting to MySQL URL [%s] as user [%s] with password [%s]",
+					url, user, password));
+			
+		conn = DriverManager.getConnection(url, user, password);				
 	}
 
 	@Override
