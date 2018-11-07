@@ -24,25 +24,30 @@
     <dependencies>
         
         <!-- 
-           Variant Extension API 
-           Must be installed in the local Maven repository manually: 
-
-           mvn install:install-file -Dfile=lib/variant-server-extapi-0.9.3.jar -DgroupId=com.variant \
-                -DartifactId=variant-server-extapi -Dversion=0.9.3 -Dpackaging=jar
-        -->        
-        <dependency>
-			  <groupId>com.variant</groupId>
-			  <artifactId>variant-server-extapi</artifactId>
-			  <version>${variant.version}</version>
-		  </dependency>
-
+             Variant Extension API 
+        	 Bootstrapped from a local JAR.
+         --> 
 		<dependency>
     		<groupId>com.variant</groupId>
-    		<artifactId>variant-server-extapi</artifactId>
+    		<artifactId>variant-extapi-standard</artifactId>
     		<version>0.9.3</version>
     		<scope>system</scope>
-		    <systemPath>${project.basedir}/lib/variant-server-extapi-0.9.3.jar</systemPath>
+		    <systemPath>${project.basedir}/lib/variant-server-stdext-0.9.3.jar</systemPath>
 		</dependency>
+
+        <!-- 
+			Alterrnatively, can be installed in the local Maven repository manually: 
+
+           mvn install:install-file -Dfile=lib/variant-extapi-standard-<release>.jar -DgroupId=com.variant \
+                -DartifactId=variant-extapi-standard -Dversion=<release> -Dpackaging=jar
+        
+        <dependency>
+			  <groupId>com.variant</groupId>
+			  <artifactId>variant-extapi-standard</artifactId>
+			  <version>${variant.version}</version>
+		</dependency>
+		-->
+		
         <!-- 
            Variant Core Library.
            Must be installed in the local Maven repository manually: 

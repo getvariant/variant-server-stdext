@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import com.typesafe.config.Config;
+import com.variant.server.api.ServerException;
 import com.variant.server.jdbc.TraceEventFlusherJdbc;
 import com.variant.server.jdbc.JdbcService.Vendor;
 
@@ -37,19 +38,13 @@ public class TraceEventFlusherH2 extends TraceEventFlusherJdbc {
 	public TraceEventFlusherH2(Config config) throws Exception {
 		
 		url = config.getString("url");
-		if (url == null)
-			throw new ServerException.Local(
-					CONFIG_PROPERTY_NOT_SET, "url", getClass().getName(), EVENT_FLUSHER_CLASS_INIT);
+		if (url == null) throw new ServerException("Missing configuration property [url]");
 
 		user = config.getString("user");
-		if (user == null)
-			throw new ServerException.Local(
-					CONFIG_PROPERTY_NOT_SET, "user", getClass().getName(), EVENT_FLUSHER_CLASS_INIT);
+		if (user == null) throw new ServerException("Missing configuration property [user]");
 
 		password = config.getString("password");
-		if (password == null)
-			throw new ServerException.Local(
-					CONFIG_PROPERTY_NOT_SET, "password", getClass().getName(), EVENT_FLUSHER_CLASS_INIT);
+		if (password == null) throw new ServerException("Missing configuration property [password]");
 		
 	}
 
