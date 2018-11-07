@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
-import com.variant.server.jdbc.TraceEventFlusherJdbc;
 import com.variant.server.jdbc.JdbcService.Vendor;
 
 /**

@@ -8,7 +8,6 @@ import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
 import com.variant.server.jdbc.JdbcService.Vendor;
-import com.variant.server.jdbc.TraceEventFlusherJdbc;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 

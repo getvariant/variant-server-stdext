@@ -3,12 +3,12 @@ package com.variant.extapi.standard.flush.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
 import com.variant.server.jdbc.JdbcService.Vendor;
-import com.variant.server.jdbc.TraceEventFlusherJdbc;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 
@@ -29,27 +29,30 @@ import com.variant.server.jdbc.TraceEventFlusherJdbc;
  */
 public class TraceEventFlusherH2 extends TraceEventFlusherJdbc {
 	
-	String url = null;
-	String user = null;
-	String password = null;
-	
+	private Connection conn = null;
+
 	public TraceEventFlusherH2(Config config) throws Exception {
-		
-		url = config.getString("url");
+				
+		String url = config.getString("url");
 		if (url == null) throw new ServerException("Missing configuration property [url]");
 
-		user = config.getString("user");
+
+		String user = config.getString("user");
 		if (user == null) throw new ServerException("Missing configuration property [user]");
 
-		password = config.getString("password");
+		String password = config.getString("password");
 		if (password == null) throw new ServerException("Missing configuration property [password]");
+
+		Properties props = new Properties();
+		props.setProperty("user", user);
+		props.setProperty("password", password);
+		conn = DriverManager.getConnection(url, props);		
 		
 	}
 
 	@Override
 	public Connection getJdbcConnection() throws Exception {
-		Class.forName("org.h2.Driver");
-		return DriverManager.getConnection(url, user, password);
+		return conn;
 	}
 
 	@Override

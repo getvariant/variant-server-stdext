@@ -57,7 +57,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 
 		final String INSERT_EVENT_EXPERIENCES_SQL = 
 				"INSERT INTO event_experiences " +
-			    "(id, event_id, test_name, experience_name, is_control) " +
+			    "(id, event_id, variation_name, experience_name, is_control) " +
 				(getJdbcVendor() == Vendor.POSTGRES ?
 						"VALUES (NEXTVAL('event_experiences_id_seq'), ?, ?, ?, ?)" :
 				getJdbcVendor() == Vendor.H2 ?
