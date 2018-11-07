@@ -7,7 +7,6 @@ import java.util.Properties;
 import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
-import com.variant.server.jdbc.JdbcService.Vendor;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 
@@ -54,8 +53,8 @@ public class TraceEventFlusherPostgres extends TraceEventFlusherJdbc {
 	}
 
 	@Override
-	protected Vendor getJdbcVendor() {
-		return Vendor.POSTGRES;
+	protected JdbcVendor getJdbcVendor() {
+		return JdbcVendor.POSTGRES;
 	}
 
 }

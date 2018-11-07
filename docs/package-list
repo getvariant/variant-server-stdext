@@ -1,1 +1,2 @@
-com.variant.server.ext.demo
+com.variant.extapi.standard.flush.jdbc
+com.variant.extapi.standard.hook

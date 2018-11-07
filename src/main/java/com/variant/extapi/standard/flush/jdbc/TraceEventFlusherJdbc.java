@@ -13,7 +13,6 @@ import com.variant.core.schema.Variation.Experience;
 import com.variant.server.api.TraceEventFlusher;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.ServerException;
-import com.variant.server.jdbc.JdbcService.Vendor;
 
 
 /**
@@ -39,7 +38,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 	 * Implementations will know the vendor.
 	 * @return
 	 */
-	protected abstract Vendor getJdbcVendor();
+	protected abstract JdbcVendor getJdbcVendor();
 	
 	/**
 	 * Persist a collection of events.
@@ -50,17 +49,17 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 		final String INSERT_EVENTS_SQL = 
 				"INSERT INTO events " +
 			    "(id, session_id, created_on, event_name) " +
-				(getJdbcVendor() == Vendor.POSTGRES ?
+				(getJdbcVendor() == JdbcVendor.POSTGRES ?
 						"VALUES (NEXTVAL('events_id_seq'), ?, ?, ?)" :
-				getJdbcVendor() == Vendor.H2 ?
+				getJdbcVendor() == JdbcVendor.H2 ?
 						"VALUES (events_id_seq.NEXTVAL, ?, ?, ?)" : "DUNNO");
 
 		final String INSERT_EVENT_EXPERIENCES_SQL = 
 				"INSERT INTO event_experiences " +
 			    "(id, event_id, variation_name, experience_name, is_control) " +
-				(getJdbcVendor() == Vendor.POSTGRES ?
+				(getJdbcVendor() == JdbcVendor.POSTGRES ?
 						"VALUES (NEXTVAL('event_experiences_id_seq'), ?, ?, ?, ?)" :
-				getJdbcVendor() == Vendor.H2 ?
+				getJdbcVendor() == JdbcVendor.H2 ?
 						"VALUES (event_experiences_id_seq.NEXTVAL, ?, ?, ?, ?)" : "");
 
 		final String INSERT_EVENT_PARAMETERS_SQL = 

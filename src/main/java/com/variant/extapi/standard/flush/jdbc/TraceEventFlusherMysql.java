@@ -2,18 +2,19 @@ package com.variant.extapi.standard.flush.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
-import com.variant.server.jdbc.JdbcService.Vendor;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 
  * instance of MySql database. The required database schema can be created by the
  * {@code create-schema.sql} SQL script, included with Variant server. 
  * <p>
- * Configuration.<br/>You may use the <code>variant.event.flusher.class.init</code> configuration property to pass configuration details to this object.
+ * Configuration.<br/>You may use the <code>variant.event.flusher.class.init</code> configuration property 
+ * to pass configuration details to this object.
  * 
  * <ul>
  *  <li><code>url</code> - specifies the JDBC URL to the MySql database.
@@ -33,7 +34,17 @@ public class TraceEventFlusherMysql extends TraceEventFlusherJdbc {
 		String url = config.getString("url");
 		if (url == null) throw new ServerException("Missing configuration property [url]");
 
-		conn = DriverManager.getConnection(url);		
+
+		String user = config.getString("user");
+		if (user == null) throw new ServerException("Missing configuration property [user]");
+
+		String password = config.getString("password");
+		if (password == null) throw new ServerException("Missing configuration property [password]");
+
+		Properties props = new Properties();
+		props.setProperty("user", user);
+		props.setProperty("password", password);
+		conn = DriverManager.getConnection(url, props);		
 		
 	}
 
@@ -43,8 +54,8 @@ public class TraceEventFlusherMysql extends TraceEventFlusherJdbc {
 	}
 
 	@Override
-	protected Vendor getJdbcVendor() {
-		return Vendor.POSTGRES;
+	protected JdbcVendor getJdbcVendor() {
+		return JdbcVendor.MYSQL;
 	}
 
 }
