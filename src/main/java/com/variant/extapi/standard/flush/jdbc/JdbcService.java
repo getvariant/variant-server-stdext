@@ -1,5 +1,5 @@
 package com.variant.extapi.standard.flush.jdbc;
-
+/*
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,7 +29,7 @@ public class JdbcService {
 	 * @param name
 	 * @return
 	 * @throws IOException
-	 */
+	 *
 	private static List<String> statementsFromFile(String path) throws IOException {
 		
 		List<String> input = Files.readAllLines(Paths.get(path));
@@ -61,7 +61,7 @@ public class JdbcService {
 	 * @param e
 	 * @param statement
 	 * @throws SQLException
-	 */
+	 *
 	private void parseSQLException(SQLException e, String statement) throws SQLException {
 
 		Vendor vendor = getVendor();
@@ -94,40 +94,14 @@ public class JdbcService {
 	//                                          PUBLIC                                             //
 	//---------------------------------------------------------------------------------------------//
 
-	/**
-	 * 
-	 * @author Igor
-	 *
-	 */
-	public static enum Vendor {
-		POSTGRES,
-		H2
-	}
-
 	public JdbcService(TraceEventWriter eventWriter) {
 		if (eventWriter == null) throw new IllegalArgumentException("EventWriter cannot be null");
 		this.eventWriter = eventWriter;
 	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Vendor getVendor() {
-
-		// Figure out the JDBC vendor, if we can.
-		if (eventWriter.flusher() instanceof com.variant.server.api.TraceEventFlusherPostgres) {
-			return Vendor.POSTGRES;
-		}
-		else if (eventWriter.flusher() instanceof com.variant.server.api.TraceEventFlusherH2) {
-			return Vendor.H2;
-		}
-		else return null;
-	}
 	
 	/**
 	 * Obtain the underlying JDBC connection via EventWriter.
-	 */
+	 *
 	public Connection getConnection() throws Exception {
 		return ((TraceEventFlusherJdbc)eventWriter.flusher()).getJdbcConnection();
 	}
@@ -137,7 +111,7 @@ public class JdbcService {
 	 * 
 	 * @param conn
 	 * @throws Exception
-	 */
+	 *
 	public void dropSchema() throws Exception {
 				
 		List<String> statements = statementsFromFile("distr/db/h2/drop-schema.sql");
@@ -162,7 +136,7 @@ public class JdbcService {
 	 * 
 	 * @param conn
 	 * @throws Exception
-	 */
+	 *
 	public void createSchema() throws Exception {
 		
 		List<String> statements = statementsFromFile("distr/db/h2/create-schema.sql");
@@ -184,7 +158,7 @@ public class JdbcService {
 	 * 
 	 * @param conn
 	 * @throws Exception
-	 */
+	 *
 	public void recreateSchema() throws Exception {
 		dropSchema();
 		createSchema();
@@ -196,10 +170,11 @@ public class JdbcService {
 	 * @param pos
 	 * @param value
 	 * @throws SQLException 
-	 */
+	 *
 	public static void setNullableInt(PreparedStatement statement, int index, Integer value) throws SQLException {
 		if (value == null) statement.setNull(index, Types.INTEGER);
 		else statement.setInt(index, value);
 	}
 
 }
+*/

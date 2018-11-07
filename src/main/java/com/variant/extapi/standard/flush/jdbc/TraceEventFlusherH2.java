@@ -1,16 +1,14 @@
 package com.variant.extapi.standard.flush.jdbc;
 
 
-import static com.variant.core.impl.CommonError.CONFIG_PROPERTY_NOT_SET;
-import static com.variant.server.api.ConfigKeys.EVENT_FLUSHER_CLASS_INIT;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import com.typesafe.config.Config;
 import com.variant.server.api.ServerException;
-import com.variant.server.jdbc.TraceEventFlusherJdbc;
+import com.variant.server.api.TraceEventFlusher;
 import com.variant.server.jdbc.JdbcService.Vendor;
+import com.variant.server.jdbc.TraceEventFlusherJdbc;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 

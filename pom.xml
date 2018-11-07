@@ -29,17 +29,17 @@
          --> 
 		<dependency>
     		<groupId>com.variant</groupId>
-    		<artifactId>variant-extapi-standard</artifactId>
+    		<artifactId>variant-server-extapi</artifactId>
     		<version>0.9.3</version>
     		<scope>system</scope>
-		    <systemPath>${project.basedir}/lib/variant-server-stdext-0.9.3.jar</systemPath>
+		    <systemPath>${project.basedir}/lib/variant-server-extapi-0.9.3.jar</systemPath>
 		</dependency>
 
         <!-- 
 			Alterrnatively, can be installed in the local Maven repository manually: 
 
-           mvn install:install-file -Dfile=lib/variant-extapi-standard-<release>.jar -DgroupId=com.variant \
-                -DartifactId=variant-extapi-standard -Dversion=<release> -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-server-extapi-<release>.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-extapi -Dversion=<release> -Dpackaging=jar
         
         <dependency>
 			  <groupId>com.variant</groupId>
