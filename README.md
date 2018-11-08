@@ -1,5 +1,4 @@
-# Variant Experience Server
-## Standard Server-side Extensions
+# Variant Experience Server </br> Standard Server-side Extensions
 ### Release 0.9.3
 #### Requires: Java 8 or later
 
