@@ -48,23 +48,38 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 				
 		final String INSERT_EVENTS_SQL = 
 				"INSERT INTO events " +
-			    "(id, session_id, created_on, event_name) " +
-				(getJdbcVendor() == JdbcVendor.POSTGRES ?
+		
+				(getJdbcVendor() == JdbcVendor.MYSQL ? 
+					    "(session_id, created_on, event_name) " :
+			    "(id, session_id, created_on, event_name) ") +
+		
+			    (getJdbcVendor() == JdbcVendor.POSTGRES ?
 						"VALUES (NEXTVAL('events_id_seq'), ?, ?, ?)" :
 				getJdbcVendor() == JdbcVendor.H2 ?
-						"VALUES (events_id_seq.NEXTVAL, ?, ?, ?)" : "DUNNO");
+						"VALUES (events_id_seq.NEXTVAL, ?, ?, ?)" : 
+				getJdbcVendor() == JdbcVendor.MYSQL ?
+						"VALUES (?, ?, ?)" : 
+						 "");
 
 		final String INSERT_EVENT_EXPERIENCES_SQL = 
 				"INSERT INTO event_experiences " +
-			    "(id, event_id, variation_name, experience_name, is_control) " +
+				
+				(getJdbcVendor() == JdbcVendor.MYSQL ? 
+						"(event_id, variation_name, experience_name, is_control) " :
+						
+						"(id, event_id, variation_name, experience_name, is_control) ") +
+						
 				(getJdbcVendor() == JdbcVendor.POSTGRES ?
 						"VALUES (NEXTVAL('event_experiences_id_seq'), ?, ?, ?, ?)" :
 				getJdbcVendor() == JdbcVendor.H2 ?
-						"VALUES (event_experiences_id_seq.NEXTVAL, ?, ?, ?, ?)" : "");
+						"VALUES (event_experiences_id_seq.NEXTVAL, ?, ?, ?, ?)" : 
+				getJdbcVendor() == JdbcVendor.MYSQL ?
+						"VALUES (?, ?, ?, ?)" : 
+						"");
 
 		final String INSERT_EVENT_PARAMETERS_SQL = 
 				"INSERT INTO event_attributes " +
-			    "(event_id, key, value) " +
+			    "(event_id, name, value) " +
 			    "VALUES (?, ?, ?)";
 
 		JdbcAdapter.executeUpdate(
