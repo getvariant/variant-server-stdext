@@ -4,18 +4,25 @@
 
 [__Documentation__](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4) | [__Javadoc__](https://getvariant.github.io/variant-extapi-standard/)
 
-This project contains a set of standard extension objects for the [Variant Experience Server's](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/) [server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4).
+This project contains the library of standard extension objects for the [Variant Experience Server's](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/) [server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4). They are run by and provide runtime customization for Variant Experience server.
 
-used for injecting custom semantics into the server’s regular execution path. It exposes two principal mechanisms for injecting custom semantics into the server's default behavior:
+There are 2 types of objects in this project:
 
-* Life-cycle Hooks are callback methods that can be subscribed to the life-cycle events. This enables custom, application-aware semantics to take over and alter the default behavior.
+* __Lifecycle Hooks__ are callback methods subscribed to Variant server's life-cycle events.
 
-* Event Flushers allow the application developer to define the persistence details of the trace events on the schema-by-schema basis.
+* __Event Flushers__ handle the terminal ingestion of Variant trace events.
 
-Both life-cycle hooks and event flushers are configured in the experiment schema.
+### Lifecycle Hooks
 
-Start by clonining this repository into a local workspace:
+#### [ChromeTargetingHook](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/hook/ChromeTargetingHook.java)
 
+Illustrates the use of a targeting hook. Used in the [Demo application](https://github.com/getvariant/variant-java-demo). Assigns all Chrome traffic to the control experience.
+
+### Trace Event Flushers
+
+#### [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
+
+### Adding Standard Extensions to Your Variant Server Instance
 ```
 % git clone https://github.com/getvariant/variant-server-extapi.git
 ```
