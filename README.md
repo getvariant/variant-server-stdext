@@ -8,7 +8,7 @@ This project contains the library of standard extension objects for the [Variant
 
 Server-side extensions are run by and provide runtime customization for Variant Experience server. They can be one of two types: _Lifecycle Hooks_ and _Event Flushers_. 
 
-### 1. Lifecycle Hooks 
+## 1. Lifecycle Hooks 
 Lifecycle hooks are callback methods subscribed to Variant server's life-cycle events. Whenever a lifecycle event is raised (e.g. the variation quealification event is raised when a user session is about to be qualified for a variation) all hooks subscribed to it are posted.  For more information, see [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.1) for more information.
 
 #### [ChromeTargetingHook](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/hook/ChromeTargetingHook.java)
@@ -26,7 +26,7 @@ Configuration:
       ...
    ]
 ```
-### 2. Trace Event Flushers
+## 2. Trace Event Flushers
 Event flushers handle the terminal ingestion of Variant trace events. They are responsible for writing out Variant trace events to some form of external storage, suitable for your technology stack, so they can be later used for analysis of Variant experiments. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
 
 #### [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
@@ -48,7 +48,7 @@ For schema-specific configuration (overrides the server-wide default):
    }
 ```
 
-### Adding Standard Extensions to Your Variant Server Instance
+## 3. Adding Standard Extensions to Your Variant Server Instance
 ```
 % git clone https://github.com/getvariant/variant-server-extapi.git
 ```
