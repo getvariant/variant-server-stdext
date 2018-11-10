@@ -4,7 +4,7 @@
 
 [__Documentation__](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4) | [__Javadoc__](https://getvariant.github.io/variant-extapi-standard/)
 
-#### This project contains the library of standard extension objects for the [Variant Experience Server's](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/) [server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4). They are run by and provide runtime customization for Variant Experience server. Extension objects can be one of two types: _Lifecycle Hooks_ and _Event Flushers_. 
+#### 3 This project contains the library of standard extension objects for the [Variant Experience Server's](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/) [server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4). They are run by and provide runtime customization for Variant Experience server. Extension objects can be one of two types: _Lifecycle Hooks_ and _Event Flushers_. 
 
 ### 1. Lifecycle Hooks 
 Lifecycle hooks are callback methods subscribed to Variant server's life-cycle events. Whenever a lifecycle event is raised (e.g. the variation quealification event is raised when a user session is about to be qualified for a variation) all hooks subscribed to it are posted.  For more information, see [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.1) for more information.
