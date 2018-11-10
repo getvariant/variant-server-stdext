@@ -13,6 +13,17 @@ Lifecycle hooks are callback methods subscribed to Variant server's life-cycle e
 
 Illustrates the use of a targeting hook. Used in the [Demo application](https://github.com/getvariant/variant-java-demo). Assigns all Chrome traffic to the control experience.
 
+Configuration:
+```
+      'hooks': [
+         ...
+         {
+              'name': 'myHook',
+              'class': 'com.variant.extapi.standard.hook.ChromeTargetingHook'
+         }
+         ...
+      ]
+```
 ### 2. Trace Event Flushers
 Event flushers handle the terminal ingestion of Variant trace events. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
 
