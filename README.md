@@ -17,19 +17,36 @@ Illustrates the use of a targeting hook. Used in the [Demo application](https://
 
 Configuration:
 ```
-      'hooks': [
-         ...
-         {
-              'name': 'myHook',
-              'class': 'com.variant.extapi.standard.hook.ChromeTargetingHook'
-         }
-         ...
-      ]
+   'hooks': [
+      ...
+      {
+         'name': 'myHook',
+         'class': 'com.variant.extapi.standard.hook.ChromeTargetingHook'
+      }
+      ...
+   ]
 ```
 ### 2. Trace Event Flushers
-Event flushers handle the terminal ingestion of Variant trace events. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
+Event flushers handle the terminal ingestion of Variant trace events. They are responsible for writing out Variant trace events to some form of external storage, suitable for your technology stack, so they can be later used for analysis of Variant experiments. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
 
 #### [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
+
+Writes trace events to an H2 database.  
+
+Configuration:
+For server-wide default configuration, which applies to all schemas managed by a Variant server that do not define their own flusher.
+```
+variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherH2
+variant.event.flusher.class.init = {"url":"jdbc:h2:<url>","user":"<user>","password":"<password>"}
+ ```
+ 
+For schema-specific configuration (overrides the server-wide default):
+```
+   'flusher': {
+      'class': 'com.variant.extapi.standard.flush.jdbc.TraceEventFlusherH2',
+      'init': {'url':'jdbc:h2:<url>','user':'<user>','password':'<password>'}
+   }
+```
 
 ### Adding Standard Extensions to Your Variant Server Instance
 ```
