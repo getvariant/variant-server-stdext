@@ -6,10 +6,10 @@
 
 A library of standard extension objects for [Variant Experience Server](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/), included in the Variant Server distribution as `variant-extapi-stadndard-<release>.jar` file. Server-side extensions are run by and provide runtime customization mechanism for Variant Experience server. They integrate with the server via [the server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4).
 
-Variant server-side extensions be one of two types: _Lifecycle Hooks_ and _Event Flushers_. 
+Variant server-side extensions are one of two types: _Lifecycle Hooks_ and _Event Flushers_. 
 
 ## 1. Lifecycle Hooks 
-Lifecycle hooks are callback methods subscribed to Variant server's life-cycle events. Whenever a lifecycle event is raised (e.g. the variation quealification event is raised when a user session is about to be qualified for a variation) all hooks subscribed to it are posted.  For more information, see [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.1) for more information.
+Lifecycle hooks are callback methods subscribed to Variant server's life-cycle events. Whenever a lifecycle event is raised, all hooks subscribed to it are posted.  For example, the variation quealification event is raised when a user session is about to be qualified for a variation. For more information, see [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.1) for more information.
 
 #### [ChromeTargetingHook](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/hook/ChromeTargetingHook.java)
 
@@ -29,7 +29,7 @@ Configuration:
 ## 2. Trace Event Flushers
 Event flushers handle the terminal ingestion of Variant trace events. They are responsible for writing out Variant trace events to some form of external storage, suitable for your technology stack, so they can be later used for analysis of Variant experiments. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
 
-#### [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
+#### 2.1 [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
 
 Writes trace events to an H2 database.  
 
@@ -45,6 +45,44 @@ For schema-specific configuration (overrides the server-wide default):
    'flusher': {
       'class': 'com.variant.extapi.standard.flush.jdbc.TraceEventFlusherH2',
       'init': {'url':'jdbc:h2:<url>','user':'<user>','password':'<password>'}
+   }
+```
+
+#### 2.2 [TraceEventFlusherPostgres](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherPostgres.java)
+
+Writes trace events to an PostgreSQL database.  
+
+Configuration:
+For server-wide default configuration, which applies to all schemas managed by a Variant server that do not define their own flusher.
+```
+variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherPostgres
+variant.event.flusher.class.init = {"url":"jdbc:postgresql:<url>","user":"<user>","password":"<password>"}
+ ```
+ 
+For schema-specific configuration (overrides the server-wide default):
+```
+   'flusher': {
+      'class': 'com.variant.extapi.standard.flush.jdbc.TraceEventFlusherPostgres',
+      'init': {'url':'jdbc:postgresql:<url>','user':'<user>','password':'<password>'}
+   }
+```
+
+#### 2.3 [TraceEventFlusherMysql](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherMysql.java)
+
+Writes trace events to an H2 database.  
+
+Configuration:
+For server-wide default configuration, which applies to all schemas managed by a Variant server that do not define their own flusher.
+```
+variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherMysql
+variant.event.flusher.class.init = {"url":"jdbc:mysql:<url>","user":"<user>","password":"<password>"}
+ ```
+ 
+For schema-specific configuration (overrides the server-wide default):
+```
+   'flusher': {
+      'class': 'com.variant.extapi.standard.flush.jdbc.TraceEventFlusherMysql',
+      'init': {'url':'jdbc:mysql:<url>','user':'<user>','password':'<password>'}
    }
 ```
 
