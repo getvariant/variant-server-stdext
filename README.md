@@ -4,7 +4,7 @@
 
 [__Documentation__](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4) | [__Javadoc__](https://getvariant.github.io/variant-extapi-standard/)
 
-A library of standard extension objects for [Variant Experience Server](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/), included in the Variant Server distribution as `variant-extapi-stadndard-<release>.jar` file. Server-side extensions are run by and provide runtime customization mechanism for Variant Experience server. They integrate with Variant server via the [server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4).
+A library of standard extension objects for [Variant Experience Server](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/), included in the Variant Server distribution as `variant-extapi-stadndard-<release>.jar` file. Server-side extensions are run by and provide runtime customization mechanism for Variant Experience server. They integrate with the server via [the server-side extension API, or ExtAPI](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-4).
 
 Variant server-side extensions be one of two types: _Lifecycle Hooks_ and _Event Flushers_. 
 
