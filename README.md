@@ -68,6 +68,8 @@ For schema-specific configuration (overrides the server-wide default):
    }
 ```
 
+Refer to Variant Server Reference for more information on [Variant server configuration](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-2) or [variation schema grammar](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3).
+
 #### 2.3. [TraceEventFlusherMysql](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherMysql.java)
 
 Writes trace events to an instance H2 database.  
@@ -85,6 +87,8 @@ For schema-specific configuration (overrides the server-wide default):
       'init': {'url':'jdbc:mysql:<url>','user':'<user>','password':'<password>'}
    }
 ```
+
+Refer to Variant Server Reference for more information on [Variant server configuration](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-2) or [variation schema grammar](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3).
 
 ## 3. Adding Standard Extensions to Your Variant Server Instance
 ```
