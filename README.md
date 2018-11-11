@@ -26,6 +26,8 @@ Configuration:
       ...
    ]
 ```
+Refer to [Variant Server Reference](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3) for more information on the variation schema grammar.
+
 ## 2. Trace Event Flushers
 Event flushers handle the terminal ingestion of Variant trace events. They are responsible for writing out Variant trace events to some form of external storage, suitable for your technology stack, so they can be later used for analysis of Variant experiments. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
 
@@ -39,7 +41,8 @@ For server-wide default configuration, which applies to all schemata managed by 
 variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherH2
 variant.event.flusher.class.init = {"url":"jdbc:h2:<url>","user":"<user>","password":"<password>"}
  ```
- 
+Refer to [Variant Server Reference](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-2) for more information on Variant server configuration.
+
 For schema-specific configuration (overrides the server-wide default):
 ```
    'flusher': {
@@ -47,6 +50,8 @@ For schema-specific configuration (overrides the server-wide default):
       'init': {'url':'jdbc:h2:<url>','user':'<user>','password':'<password>'}
    }
 ```
+
+Refer to [Variant Server Reference](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3) for more information on the variation schema grammar.
 
 #### 2.2. [TraceEventFlusherPostgres](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherPostgres.java)
 
