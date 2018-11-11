@@ -29,7 +29,7 @@ Configuration:
 ## 2. Trace Event Flushers
 Event flushers handle the terminal ingestion of Variant trace events. They are responsible for writing out Variant trace events to some form of external storage, suitable for your technology stack, so they can be later used for analysis of Variant experiments. See [Variant User Guide](https://www.getvariant.com/resources/docs/0-9/experience-server/user-guide/#section-4.7.2) for more information.
 
-#### 2.1 [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
+#### 2.1. [TraceEventFlusherH2](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherH2.java)
 
 Writes trace events to an H2 database.  
 
@@ -48,7 +48,7 @@ For schema-specific configuration (overrides the server-wide default):
    }
 ```
 
-#### 2.2 [TraceEventFlusherPostgres](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherPostgres.java)
+#### 2.2. [TraceEventFlusherPostgres](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherPostgres.java)
 
 Writes trace events to an PostgreSQL database.  
 
@@ -67,7 +67,7 @@ For schema-specific configuration (overrides the server-wide default):
    }
 ```
 
-#### 2.3 [TraceEventFlusherMysql](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherMysql.java)
+#### 2.3. [TraceEventFlusherMysql](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherMysql.java)
 
 Writes trace events to an H2 database.  
 
