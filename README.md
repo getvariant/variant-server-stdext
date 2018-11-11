@@ -35,13 +35,11 @@ Event flushers handle the terminal ingestion of Variant trace events. They are r
 
 Writes trace events to an instance of H2 database.  
 
-For server-wide default configuration, which applies to all schemata that do not define their own flusher.
+For server-wide default configuration, which applies to all schemata that do not define their own flusher:
 ```
 variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherH2
 variant.event.flusher.class.init = {"url":"jdbc:h2:<url>","user":"<user>","password":"<password>"}
  ```
-Refer to [Variant Server Reference](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-2) for more information on Variant server configuration.
-
 For schema-specific configuration (overrides the server-wide default):
 ```
    'flusher': {
@@ -50,13 +48,13 @@ For schema-specific configuration (overrides the server-wide default):
    }
 ```
 
-Refer to [Variant Server Reference](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3) for more information on the variation schema grammar.
+Refer to Variant Server Reference for more information on [Variant server configuration](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-2) or [variation schema grammar](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3).
 
 #### 2.2. [TraceEventFlusherPostgres](https://github.com/getvariant/variant-extapi-standard/blob/master/src/main/java/com/variant/extapi/standard/flush/jdbc/TraceEventFlusherPostgres.java)
 
 Writes trace events to an instance of PostgreSQL database.  
 
-For server-wide default configuration, which applies to all schemata that do not define their own flusher.
+For server-wide default configuration, which applies to all schemata that do not define their own flusher:
 ```
 variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherPostgres
 variant.event.flusher.class.init = {"url":"jdbc:postgresql:<url>","user":"<user>","password":"<password>"}
@@ -74,7 +72,7 @@ For schema-specific configuration (overrides the server-wide default):
 
 Writes trace events to an instance H2 database.  
 
-For server-wide default configuration, which applies to all schemata that do not define their own flusher.
+For server-wide default configuration, which applies to all schemata that do not define their own flusher:
 ```
 variant.event.flusher.class.name = com.variant.extapi.standard.flush.jdbc.TraceEventFlusherMysql
 variant.event.flusher.class.init = {"url":"jdbc:mysql:<url>","user":"<user>","password":"<password>"}
