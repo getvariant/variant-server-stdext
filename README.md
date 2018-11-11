@@ -90,24 +90,11 @@ For schema-specific configuration (overrides the server-wide default):
 
 Refer to Variant Server Reference for more information on [Variant server configuration](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-2) or [variation schema grammar](https://www.getvariant.com/resources/docs/0-9/experience-server/reference/#section-3).
 
-## 3. Adding Standard Extensions to Your Variant Server Instance
-```
-% git clone https://github.com/getvariant/variant-server-extapi.git
-```
+## 3. Writing Custom Server-Side Extensions
 
-The Variant ExtAPI is provided in the `lib/variant-server-extapi-\<release\>.jar` JAR file and the dependent library `lib/variant-core-\<release\>.jar`. You may either directly import these into your project or, if you use a dependency management tool like Maven, install them into your local Maven repository:
+To develop your own custom extensions for Variant server, simply fork this project into one of your own, remove the existing code under `src/` and start coding. The Variant ExtAPI is provided in the `lib/variant-server-extapi-\<release\>.jar` JAR file along with its dependent library `lib/variant-core-\<release\>.jar`. Don't forget to change your project's name in [the `pom.xml` file](https://github.com/getvariant/variant-extapi-standard/blob/ae759f27237413bd86472e209514ac5b7a8efa66/pom.xml#L18-L22) so that the built JAR file does not conflict with the standard extensions library.
 
-```
-% mvn install:install-file -Dfile=/path/to/variant-server-extapi-<release>.jar -DgroupId=com.variant \
-                -DartifactId=variant-server-extapi -Dversion=<release> -Dpackaging=jar
-
-% mvn install:install-file -Dfile=/path/to/variant-core-<release>.jar -DgroupId=com.variant \
-                -DartifactId=variant-core -Dversion=<release> -Dpackaging=jar
-```
-
-Note that the repository contains several sample objects in `/src/main/java/com/variant/server/ext/demo/`. These are provided for illustration only and can be removed if you don't need them.
-
-To make your extension classes available to Variant server at run time, you must package them into a JAR file and copy the jar file into Variant server's `ext/` directory, along with all the dependencies.
+To make your extension classes available to Variant server at run time, package them into a JAR file and copy the jar file into Variant server's `ext/` directory, along with all the dependencies.
 
 To package objects in this repository:
 
