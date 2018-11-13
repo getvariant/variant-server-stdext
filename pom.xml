@@ -10,13 +10,13 @@
     
 	<properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
-    	<tomcat.version>7.0.59</tomcat.version>
         <variant.version>0.9.3</variant.version>
     	
     </properties>
 
-    <name>Variant Experiment Server ExtAPI </name>
+    <name>Edulastic / Variant ExtAPI objects</name>
     <packaging>jar</packaging>
+
     <groupId>com.variant</groupId>
     <artifactId>variant-extapi-standard</artifactId>
     <version>${variant.version}</version>
@@ -81,6 +81,12 @@
            <version>1.2.1</version>
         </dependency>
         
+        <!-- Edulastic related dependencies -->
+        <dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+           <version>8.0.11</version>
+        </dependency>
 	</dependencies>
 	
     <build>
