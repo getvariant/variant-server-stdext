@@ -130,7 +130,7 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 	 * Obtain random experience in accordance to the weights provided in the schema.
 	 * This, it turns out, is not as trivial as once thought. We'll avoid code repetitions
 	 * and just snag this from the default targeter. End user will not know to do this,
-	 * so we need to sink this into the produce ASAP.
+	 * so we need to sink this into the server ASAP.
 	 * 
 	 * @param var Variation
 	 * @return Resulting experience
