@@ -131,10 +131,6 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 	 * This, it turns out, is not as trivial as once thought. We'll avoid code repetitions
 	 * and just snag this from the default targeter. End user will not know to do this,
 	 * so we need to sink this into the server ASAP.
-	 * 
-	 * @param var Variation
-	 * @return Resulting experience
-	 * @throws RuntimeException if this Variation's experiences do not have weights.
 	 */
 	@SuppressWarnings("unchecked")
 	private VariationTargetingLifecycleEventPostResultImpl postDefaultTargeter(VariationTargetingLifecycleEvent event) throws Exception {
