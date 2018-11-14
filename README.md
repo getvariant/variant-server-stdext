@@ -96,7 +96,7 @@ The Variant Extention API is provided in the `lib/variant-server-extapi-\<releas
  
 * Fork this project into one of your own.
 * Remove the existing code under `src/` 
-* Change the project's name in the [`pom.xml`](https://github.com/getvariant/variant-extapi-standard/blob/ae759f27237413bd86472e209514ac5b7a8efa66/pom.xml#L18-L22) file to something more suitable for your needs.
+* Change the project's name in the [`pom.xml`](https://github.com/getvariant/variant-extapi-standard/blob/37ed673c1faf7377bb10d57ef0250060d2c29853/pom.xml#L19-L24) file to something more suitable for your needs.
 * Start coding.
 * Package objects as a JAR file:
 
