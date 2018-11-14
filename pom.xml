@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  Variant Experiment Server Extension API Custom Objects
-  © 2017 Variant Inc. All rights reserved..
+  Variant Experiment Server Standard Extensions
+  © 2018 Variant Inc. All rights reserved.
 
+  To build, run 'mvn package'
+  
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -14,53 +16,63 @@
     	
     </properties>
 
-    <name>Edulastic / Variant ExtAPI objects</name>
+    <name>Variant Server Standard Extension</name>
     <packaging>jar</packaging>
 
     <groupId>com.variant</groupId>
     <artifactId>variant-extapi-standard</artifactId>
-    <version>${variant.version}</version>
+    <version>0.9.3</version>
     
     <dependencies>
         
         <!-- 
-             Variant Extension API 
-        	 Bootstrapped from a local JAR.
+             Variant Extension API is bootstrapped from local JAR.
          --> 
 		<dependency>
     		<groupId>com.variant</groupId>
     		<artifactId>variant-server-extapi</artifactId>
-    		<version>0.9.3</version>
+    		<version>${variant.version}</version>
     		<scope>system</scope>
-		    <systemPath>${project.basedir}/lib/variant-server-extapi-0.9.3.jar</systemPath>
+		    <systemPath>${project.basedir}/lib/variant-server-extapi-${variant.version}.jar</systemPath>
 		</dependency>
 
         <!-- 
-			Alterrnatively, can be installed in the local Maven repository manually: 
+			Alternatively, can be installed in the local Maven repository manually:
 
-           mvn install:install-file -Dfile=lib/variant-server-extapi-<release>.jar -DgroupId=com.variant \
-                -DartifactId=variant-server-extapi -Dversion=<release> -Dpackaging=jar
+           mvn install:install-file -Dfile=lib/variant-server-extapi-${variant.version}.jar -DgroupId=com.variant \
+                -DartifactId=variant-server-extapi -Dversion=${variant.version} -Dpackaging=jar
         
         <dependency>
 			  <groupId>com.variant</groupId>
-			  <artifactId>variant-extapi-standard</artifactId>
+			  <artifactId>variant-server-extapi</artifactId>
 			  <version>${variant.version}</version>
 		</dependency>
 		-->
 		
         <!-- 
-           Variant Core Library.
-           Must be installed in the local Maven repository manually: 
-
-           mvn install:install-file -Dfile=lib/variant-core-0.9.3.jar -DgroupId=com.variant \
-                -DartifactId=variant-core -Dversion=0.9.3 -Dpackaging=jar
+           Variant Core Library is bootstrapped from local JAR.
         -->        
         <dependency>
            <groupId>com.variant</groupId>
            <artifactId>variant-core</artifactId>
            <version>${variant.version}</version>
+    		<scope>system</scope>
+		    <systemPath>${project.basedir}/lib/variant-core-${variant.version}.jar</systemPath>
         </dependency>
-                
+ 
+        <!-- 
+		   Alternatively, can be installed in the local Maven repository manually:
+
+           mvn install:install-file -Dfile=lib/variant-core-${variant.version}.jar -DgroupId=com.variant \
+                -DartifactId=variant-core -Dversion=${variant.version} -Dpackaging=jar
+
+        <dependency>
+           <groupId>com.variant</groupId>
+           <artifactId>variant-core</artifactId>
+           <version>${variant.version}</version>
+        </dependency>
+        -->
+
         <!-- Logging -->
         <dependency>
 		    <groupId>org.slf4j</groupId>
@@ -81,12 +93,6 @@
            <version>1.2.1</version>
         </dependency>
         
-        <!-- Edulastic related dependencies -->
-        <dependency>
-           <groupId>mysql</groupId>
-           <artifactId>mysql-connector-java</artifactId>
-           <version>8.0.11</version>
-        </dependency>
 	</dependencies>
 	
     <build>
@@ -107,9 +113,6 @@
                <version>2.18.1</version>
                <configuration>
 			       <reuseForks>false</reuseForks>
-			       <systemPropertyVariables>
-                      <variant.version>${variant.version}</variant.version>
-                </systemPropertyVariables>
                </configuration>
             </plugin>
             
