@@ -92,15 +92,17 @@ Refer to Variant Server Reference for more information on [Variant server config
 
 ## 3. Writing Custom Server-Side Extensions
 
-To develop your own custom extensions for Variant server, simply fork this project into one of your own, remove the existing code under `src/` and start coding. The Variant ExtAPI is provided in the `lib/variant-server-extapi-\<release\>.jar` JAR file along with its dependent library `lib/variant-core-\<release\>.jar`. Don't forget to change your project's name in [the `pom.xml` file](https://github.com/getvariant/variant-extapi-standard/blob/ae759f27237413bd86472e209514ac5b7a8efa66/pom.xml#L18-L22) so that the built JAR file does not conflict with the standard extensions library.
-
-To make your extension classes available to Variant server at run time, package them into a JAR file and copy the jar file into Variant server's `ext/` directory, along with all the dependencies.
-
-To package objects in this repository:
+The Variant Extention API is provided in the `lib/variant-server-extapi-\<release\>.jar` JAR file along with its dependent library `lib/variant-core-\<release\>.jar`. To develop your own custom extensions follow these steps:
+ 
+* Fork this project into one of your own.
+* Remove the existing code under `src/` 
+* Change the project's name in [the `pom.xml` file](https://github.com/getvariant/variant-extapi-standard/blob/ae759f27237413bd86472e209514ac5b7a8efa66/pom.xml#L18-L22) to something more suitable for your needs.
+* Start coding.
+* Package objects as a JAR file:
 
 ```
 % mvn package
 ```
 
-This will build the distribution JAR file in the `target/` directory, which you need to copy into Variant server's `ext/` directory, along with all the dependencies.
+This will build a JAR file in the `target/` directory, which you need to copy into Variant server's `ext/` directory, along with all the dependencies you have added.
 
