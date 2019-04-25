@@ -31,11 +31,12 @@ import com.variant.server.api.TraceEventFlusher;
  */
 public class TraceEventFlusherCsv implements TraceEventFlusher {
 	
-	private boolean header = false;
 	private String fileName = "variant-events.csv";
 	private BufferedWriter out;
 	
 	public TraceEventFlusherCsv(Config config) throws Exception {
+		
+		boolean header = false;
 		
 		if (config != null) {
 			header = Optional.ofNullable(config.getBoolean("header")).orElse(header);
@@ -44,14 +45,15 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 		
 		out = Files.newBufferedWriter(Paths.get(fileName), CREATE, WRITE, TRUNCATE_EXISTING );
 
+		if (header) {
+			writeLine(new Object[] {"event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control"});
+			out.flush();
+		}
+
 	}
 
 	@Override
 	public void flush(Collection<FlushableTraceEvent> events) throws Exception {
-
-		if (header) {
-			writeLine(new Object[] {"event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control"});
-		}
 
 		for (FlushableTraceEvent event: events) {
 
