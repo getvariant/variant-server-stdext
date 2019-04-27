@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
+
 import static java.nio.file.StandardOpenOption.*;
 import java.util.Collection;
 import java.util.Map;
@@ -69,7 +71,7 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 			for (Experience e: event.getLiveExperiences()) {
    				writeLine(
    						event.getName(), 
-   						event.getCreateDate().getTime(), 
+   						DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp()), 
    						event.getSessionId(),
    						attrs,
    						e.getVariation().getName(),

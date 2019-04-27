@@ -29,6 +29,6 @@ CREATE TABLE event_experiences (
 
 CREATE VIEW events_v AS
   SELECT e.id event_id, e.session_id, e.created_on, e.event_name, ev.variation_name, ev.experience_name, ev.is_control,
-         (SELECT group_concat(concat(name, '=', value)) FROM event_attributes where event_id = e.id) event_attributes
-   FROM events e left outer join event_experiences ev ON e.id = ev.event_id
-   ORDER BY event_id;
+         (SELECT group_concat('''' || name || '''=''' || value || '''', ',') FROM event_attributes where event_id = e.id) event_attributes
+  FROM events e left outer join event_experiences ev ON e.id = ev.event_id
+  ORDER BY event_id;

@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.variant.core.schema.Variation.Experience;
-import com.variant.server.api.TraceEventFlusher;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.ServerException;
+import com.variant.server.api.TraceEventFlusher;
 
 
 /**
@@ -97,7 +97,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 
 					for (FlushableTraceEvent event: events) {
 						stmt.setString(1, event.getSessionId());
-						stmt.setTimestamp(2, new Timestamp(event.getCreateDate().getTime()));
+						stmt.setTimestamp(2, Timestamp.from(event.getTimestamp()));
 						stmt.setString(3, event.getName());
 
 						stmt.addBatch();

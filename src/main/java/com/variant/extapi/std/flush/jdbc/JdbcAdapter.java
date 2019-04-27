@@ -31,7 +31,7 @@ public class JdbcAdapter {
 			msg.append(stack.get(i).getMessage());
 		}
 		
-		return new RuntimeException(e.getMessage(), new RuntimeException(msg.toString()));
+		return new RuntimeException(msg.toString(), e);
 	}
 
 	//---------------------------------------------------------------------------------------------//

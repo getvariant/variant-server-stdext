@@ -1,5 +1,6 @@
 package com.variant.extapi.std.flush;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class TraceEventFlusherAppLogger implements TraceEventFlusher {
 			StringBuilder msg = new StringBuilder();
 			msg.append("{")
 				.append("event_name:'").append(event.getName()).append("', ")
-				.append("created_on:'").append(event.getCreateDate().getTime()).append("', ")
+				.append("created_on:'").append(DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp())).append("', ")
 				.append("session_id:'").append(event.getSessionId()).append("'");
 
 			if (!event.getLiveExperiences().isEmpty()) {
