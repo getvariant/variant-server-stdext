@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.core.schema.Variation;
 import com.variant.core.schema.Variation.Experience;
 import com.variant.server.api.Session;
-import com.variant.server.api.lifecycle.PostResultFactory;
 import com.variant.server.api.lifecycle.VariationTargetingLifecycleEvent;
 import com.variant.server.impl.VariationTargetingLifecycleEventPostResultImpl;
 
@@ -73,7 +73,7 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 	}
 
 	@Override
-	public LifecycleHook.PostResult post(VariationTargetingLifecycleEvent event) throws Exception {
+	public Optional<VariationTargetingLifecycleEvent.PostResult> post(VariationTargetingLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getSession();
 		Variation variation = event.getVariation();
@@ -105,7 +105,7 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 			preparedInsert.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 			try {
 				preparedInsert.execute();
-				return postResult;
+				return Optional.of(postResult);
 			}
 			catch (SQLException ex) {
 				if (ex.getErrorCode() == 1062) {
@@ -121,9 +121,9 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 			}
 		}
 		
-		VariationTargetingLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
+		VariationTargetingLifecycleEvent.PostResult result = event.newPostResult();
 		result.setTargetedExperience(experience);
-		return result;
+		return Optional.of(result);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 	@SuppressWarnings("unchecked")
 	private VariationTargetingLifecycleEventPostResultImpl postDefaultTargeter(VariationTargetingLifecycleEvent event) throws Exception {
 		return (VariationTargetingLifecycleEventPostResultImpl) 
-				((LifecycleHook<VariationTargetingLifecycleEvent>)event.getDefaultHook()).post(event);
+				((LifecycleHook<VariationTargetingLifecycleEvent>)event.getDefaultHook()).post(event).get();
 		
 	}
 }

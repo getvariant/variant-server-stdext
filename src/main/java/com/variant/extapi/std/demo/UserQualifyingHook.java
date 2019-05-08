@@ -1,6 +1,7 @@
 package com.variant.extapi.std.demo;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.typesafe.config.Config;
 import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.server.api.Session;
-import com.variant.server.api.lifecycle.PostResultFactory;
 import com.variant.server.api.lifecycle.VariationQualificationLifecycleEvent;
 
 
@@ -36,7 +36,7 @@ public class UserQualifyingHook implements LifecycleHook<VariationQualificationL
 	}
 
 	@Override
-	public LifecycleHook.PostResult post(VariationQualificationLifecycleEvent event) throws Exception {
+	public Optional<VariationQualificationLifecycleEvent.PostResult> post(VariationQualificationLifecycleEvent event) throws Exception {
 
 		Session ssn = event.getSession();
 		String user = ssn.getAttributes().get("user");
@@ -46,9 +46,9 @@ public class UserQualifyingHook implements LifecycleHook<VariationQualificationL
 		if (blacklisted)
 			LOG.info("Disqualified blacklisted user [" + user + "] from variation " + event.getVariation().getName() + "]");
 		
-		VariationQualificationLifecycleEvent.PostResult result = PostResultFactory.mkPostResult(event);
+		VariationQualificationLifecycleEvent.PostResult result = event.newPostResult();
 		result.setQualified(!blacklisted);
-		return result;
+		return Optional.of(result);
 	}
 
 }
