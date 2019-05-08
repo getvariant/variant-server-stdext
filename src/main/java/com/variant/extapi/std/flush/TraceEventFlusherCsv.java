@@ -70,6 +70,7 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 			
 			for (Experience e: event.getLiveExperiences()) {
    				writeLine(
+   						event.getId(), 
    						event.getName(), 
    						DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp()), 
    						event.getSessionId(),

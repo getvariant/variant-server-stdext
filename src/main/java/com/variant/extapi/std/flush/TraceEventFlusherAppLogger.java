@@ -52,6 +52,7 @@ public class TraceEventFlusherAppLogger implements TraceEventFlusher {
 		for (FlushableTraceEvent event: events) {
 			StringBuilder msg = new StringBuilder();
 			msg.append("{")
+    			.append("event_id:'").append(event.getId()).append("', ")
 				.append("event_name:'").append(event.getName()).append("', ")
 				.append("created_on:'").append(DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp())).append("', ")
 				.append("session_id:'").append(event.getSessionId()).append("'");
