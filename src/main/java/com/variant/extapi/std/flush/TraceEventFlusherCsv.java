@@ -48,7 +48,7 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 		out = Files.newBufferedWriter(Paths.get(fileName), CREATE, WRITE, TRUNCATE_EXISTING );
 
 		if (header) {
-			writeLine(new Object[] {"event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control"});
+			writeLine(new Object[] {"event_id", "event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control"});
 			out.flush();
 		}
 
