@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.Config;
-import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.server.api.Session;
+import com.variant.server.api.lifecycle.LifecycleHook;
 import com.variant.server.api.lifecycle.VariationQualificationLifecycleEvent;
 
 
@@ -46,7 +46,7 @@ public class UserQualifyingHook implements LifecycleHook<VariationQualificationL
 		if (blacklisted)
 			LOG.info("Disqualified blacklisted user [" + user + "] from variation " + event.getVariation().getName() + "]");
 		
-		VariationQualificationLifecycleEvent.PostResult result = event.newPostResult();
+		VariationQualificationLifecycleEvent.PostResult result = event.mkPostResult();
 		result.setQualified(!blacklisted);
 		return Optional.of(result);
 	}

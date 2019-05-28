@@ -12,10 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.Config;
-import com.variant.core.lifecycle.LifecycleHook;
 import com.variant.core.schema.Variation;
 import com.variant.core.schema.Variation.Experience;
 import com.variant.server.api.Session;
+import com.variant.server.api.lifecycle.LifecycleHook;
 import com.variant.server.api.lifecycle.VariationTargetingLifecycleEvent;
 import com.variant.server.impl.VariationTargetingLifecycleEventPostResultImpl;
 
@@ -121,7 +121,7 @@ public class DurableTargetingHook implements LifecycleHook<VariationTargetingLif
 			}
 		}
 		
-		VariationTargetingLifecycleEvent.PostResult result = event.newPostResult();
+		VariationTargetingLifecycleEvent.PostResult result = event.mkPostResult();
 		result.setTargetedExperience(experience);
 		return Optional.of(result);
 	}
