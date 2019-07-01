@@ -5,7 +5,7 @@
 # 
 
 
-version=0.9.3
+version=0.10.0
 root_dir=$(cd $(dirname $0)/..; pwd)
 javadoc_dir=${root_dir}/docs
 
@@ -16,6 +16,6 @@ javadoc -d ${javadoc_dir}  --allow-script-in-comments \
    -windowtitle "Variant ${version}" \
    -doctitle "Variant Experiment Server Standard Extensions" \
    -header "<a onclick=\"window.top.location.href='http://getvariant.com';\" href=\"#\"> <img style=\"margin-bottom:5px;\" src=\"http://getvariant.com/wp-content/uploads/2016/05/VariantLogoSmall.png\"/> \</a>" \
-   -bottom "Release $version. Updated $(date +"%d %b %Y").<br/> Copyright &copy; 2018 <a onclick=\"window.top.location.href='http://getvariant.com';\" href=\"#\">Variant Inc.</a>" \
+   -bottom "Release $version. Updated $(date +"%d %b %Y").<br/> Copyright &copy; 2019 <a onclick=\"window.top.location.href='http://getvariant.com';\" href=\"#\">Variant Inc.</a>" \
    -subpackages \
    com.variant.extapi.std
