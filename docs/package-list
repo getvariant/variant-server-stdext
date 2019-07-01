@@ -1,2 +1,3 @@
-com.variant.extapi.standard.flush.jdbc
-com.variant.extapi.standard.hook
+com.variant.extapi.std.demo
+com.variant.extapi.std.flush
+com.variant.extapi.std.flush.jdbc

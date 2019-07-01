@@ -11,11 +11,11 @@ javadoc_dir=${root_dir}/docs
 
 rm -rf ${javadoc_dir}/*
 
-javadoc -d ${javadoc_dir}  \
+javadoc -d ${javadoc_dir}  --allow-script-in-comments \
    -sourcepath ${root_dir}/src/main/java \
    -windowtitle "Variant ${version}" \
    -doctitle "Variant Experiment Server Standard Extensions" \
    -header "<a onclick=\"window.top.location.href='http://getvariant.com';\" href=\"#\"> <img style=\"margin-bottom:5px;\" src=\"http://getvariant.com/wp-content/uploads/2016/05/VariantLogoSmall.png\"/> \</a>" \
    -bottom "Release $version. Updated $(date +"%d %b %Y").<br/> Copyright &copy; 2018 <a onclick=\"window.top.location.href='http://getvariant.com';\" href=\"#\">Variant Inc.</a>" \
    -subpackages \
-   com.variant.extapi.standard 
+   com.variant.extapi.std
