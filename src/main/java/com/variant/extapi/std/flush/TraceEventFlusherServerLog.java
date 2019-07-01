@@ -18,16 +18,14 @@ import com.variant.server.api.TraceEventFlusher;
 /**
  * An implementation of {@link TraceEventFlusher}, which appends trace events
  * to the application logger. This is the default, out of the box event flusher,
- * which is completely independent of the operational environment. Probably not for production use, 
- * but is good enough for the demo application.
+ * which is completely independent of the operational environment. Probably not for production use. 
  * <p>
- * Configuration. You may use the {@code variant.event.flusher.class.init} configuration property
- * to pass configuration details to this object.
+ * Configuration.
  * <ul>
  * <li><code>level</code> - specifies the logging level to be used. Defaults to 'INFO'.<br/>
  * </ul>
  * Example:<br/>
- * <code>variant.event.flusher.class.init = {init="INFO"}</code>
+ * <code>variant.event.flusher.class.init = {level="INFO"}</code>
  * 
  * 
  * @since 0.5
