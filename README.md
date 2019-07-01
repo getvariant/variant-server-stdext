@@ -1,4 +1,4 @@
-# Variant АIM Server </br> Standard Extensions
+# Variant АIM Server Standard Extensions
 ### Release 0.10.0
 #### Requires: Java 8 or later
 
