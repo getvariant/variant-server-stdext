@@ -4,7 +4,7 @@
 # 
 
 
-version=0.10.0
+version=0.10.1
 root_dir=$(cd $(dirname $0)/..; pwd)
 
 cd $root_dir
@@ -18,4 +18,4 @@ jar -uf target/variant-extapi-standard-${version}.jar $(find db)
 
 # Copy the new buid into the server's distr directory.
 # assuming the location of the variant local repo.
-cp target/variant-extapi-standard-${version}.jar ../../variant/SERVER/distr/ext
+cp target/variant-extapi-standard-${version}.jar ../../variant/SERVER/src/universal/ext
