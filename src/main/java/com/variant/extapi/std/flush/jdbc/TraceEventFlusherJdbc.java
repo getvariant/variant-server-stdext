@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Map;
 
 import com.variant.core.schema.Variation.Experience;
@@ -25,25 +24,26 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 				
 	/**
 	 * Concrete subclass tells this class how to obtain a connection to its flavor of JDBC.
-	 * JUnits will also use this to create the schema.
+	 * JUnits will also use this to create the database schema. Subclasses should take care
+	 * of creating the connection only once and cacheing it. 
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract Connection getJdbcConnection() throws Exception;
+	public abstract Connection getJdbcConnection();
 
 	/**
 	 * Implementations will know the vendor.
 	 * @return
 	 */
 	protected abstract JdbcVendor getJdbcVendor();
-	
+			 
 	/**
 	 * Persist a collection of events.
 	 */
 	@Override
-	final public void flush(final Collection<FlushableTraceEvent> events) throws Exception {
-				
+	final public void flush(FlushableTraceEvent[] events, int size) throws Exception {
+
 		final String INSERT_EVENTS_SQL = 
 				"INSERT INTO events (id, session_id, created_on, event_name) VALUES (?, ?, ?, ?)";
 
@@ -66,7 +66,8 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 					
 					PreparedStatement stmt = conn.prepareStatement(INSERT_EVENTS_SQL, Statement.RETURN_GENERATED_KEYS);
 
-					for (FlushableTraceEvent event: events) {
+					for (int i = 0; i < size; i++) {
+						FlushableTraceEvent event = events[i];
 						stmt.setString(1, event.getId());
 						stmt.setString(2, event.getSessionId());
 						stmt.setTimestamp(3, Timestamp.from(event.getTimestamp()));
@@ -83,7 +84,8 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 					// 2. Insert into EVENT_PARAMETERS.
 					//
 					stmt = conn.prepareStatement(INSERT_EVENT_PARAMETERS_SQL);
-					for (FlushableTraceEvent event: events) {
+					for (int i = 0; i < size; i++) {
+						FlushableTraceEvent event = events[i];
 						for (Map.Entry<String, String> param: event.getAttributes().entrySet()) {
 							stmt.setString(1, event.getId());
 							stmt.setString(2, param.getKey());
@@ -100,7 +102,8 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 					// 3. Insert into EVENT_EXPERIENCES.
 					//
 					stmt = conn.prepareStatement(INSERT_EVENT_EXPERIENCES_SQL);
-					for (FlushableTraceEvent event: events) {
+					for (int i = 0; i < size; i++) {
+						FlushableTraceEvent event = events[i];
 						for (Experience exp: event.getLiveExperiences()) {
 							stmt.setString(1, event.getId());
 							stmt.setString(2, exp.getVariation().getName());
@@ -115,6 +118,5 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 				}
 			}
 		);
-		
-	}
+	}	
 }

@@ -1,7 +1,6 @@
 package com.variant.extapi.std.flush;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -50,10 +49,10 @@ public class TraceEventFlusherServerLog implements TraceEventFlusher {
 	}
 
 	@Override
-	public void flush(Collection<FlushableTraceEvent> events)
-			throws Exception {
+	public void flush(FlushableTraceEvent[] events, int size) throws Exception {
 
-		for (FlushableTraceEvent event: events) {
+		for (int i = 0; i < size; i++) {
+			FlushableTraceEvent event = events[i];
 			StringBuilder msg = new StringBuilder();
 			msg.append("{")
     			.append("event_id:'").append(event.getId()).append("', ")

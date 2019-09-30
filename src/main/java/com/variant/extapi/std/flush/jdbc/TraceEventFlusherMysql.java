@@ -51,13 +51,18 @@ public class TraceEventFlusherMysql extends TraceEventFlusherJdbc {
 	}
 
 	@Override
-	public Connection getJdbcConnection() throws Exception {
+	public Connection getJdbcConnection() {
 		return conn;
 	}
 
 	@Override
 	protected JdbcVendor getJdbcVendor() {
 		return JdbcVendor.MYSQL;
+	}
+
+	@Override 
+	public void destroy() throws Exception {
+		if (conn != null) conn.close();
 	}
 
 }

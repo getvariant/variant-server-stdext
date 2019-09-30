@@ -1,13 +1,14 @@
 package com.variant.extapi.std.flush;
 
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
-
-import static java.nio.file.StandardOpenOption.*;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -54,11 +55,15 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 
 	}
 
+	/**
+	 * Write a bunch of events to file.
+	 */
 	@Override
-	public void flush(Collection<FlushableTraceEvent> events) throws Exception {
+	public void flush(FlushableTraceEvent[] events, int size) throws Exception {
 
-		for (FlushableTraceEvent event: events) {
+		for (int i = 0; i < size; i++) {
 
+			FlushableTraceEvent event = events[i];
 			StringBuilder attrsBuffer = new StringBuilder();
 			boolean first = true;
 			for (Map.Entry<String, String> param: event.getAttributes().entrySet()) {
@@ -84,6 +89,14 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 		out.flush();
 	}
 
+	/**
+	 * This flusher is going down. Close the file. 
+	 */
+	@Override
+	public void destroy() throws Exception {
+		out.close();
+	}
+	
 	/**
 	 * Enclose the string in double quotes. If a double quote already occurs in the string, 
 	 * double it, as per the RFC

@@ -3,6 +3,7 @@ package com.variant.extapi.std.flush.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import com.typesafe.config.Config;
@@ -46,11 +47,10 @@ public class TraceEventFlusherH2 extends TraceEventFlusherJdbc {
 		props.setProperty("user", user);
 		props.setProperty("password", password);
 		conn = DriverManager.getConnection(url, props);		
-		
 	}
 
 	@Override
-	public Connection getJdbcConnection() throws Exception {
+	public Connection getJdbcConnection() {
 		return conn;
 	}
 
@@ -59,4 +59,8 @@ public class TraceEventFlusherH2 extends TraceEventFlusherJdbc {
 		return JdbcVendor.H2;
 	}
 	
+	@Override 
+	public void destroy() throws Exception {
+		if (conn != null) conn.close();
+	}
 }

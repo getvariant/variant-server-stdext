@@ -1,7 +1,5 @@
 package com.variant.extapi.std.flush;
 
-import java.util.Collection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +17,8 @@ public class TraceEventFlusherNull implements TraceEventFlusher {
 	private static final Logger LOG = LoggerFactory.getLogger(TraceEventFlusherNull.class);
 		
 	@Override
-	public void flush(Collection<FlushableTraceEvent> events) throws Exception {
-			LOG.debug(String.format("Discarded %s events.", events.size()));
+	public void flush(FlushableTraceEvent[] events, int size) throws Exception {
+			LOG.debug(String.format("Discarded %s events.", size));
 	}
 
 }
