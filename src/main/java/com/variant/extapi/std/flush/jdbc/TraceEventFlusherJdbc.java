@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Map;
 
-import com.variant.core.schema.Variation.Experience;
+import com.variant.share.schema.Variation.Experience;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
 

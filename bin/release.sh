@@ -4,7 +4,7 @@
 # 
 
 
-version=0.10.2
+version=0.10.3
 root_dir=$(cd $(dirname $0)/..; pwd)
 
 cd $root_dir

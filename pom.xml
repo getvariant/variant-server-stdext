@@ -12,7 +12,7 @@
     
 	<properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
-        <variant.version>0.10.2</variant.version>
+        <variant.version>0.10.3</variant.version>
     	
     </properties>
 
@@ -49,30 +49,6 @@
 		</dependency>
 		-->
 		
-        <!-- 
-           Variant Core Library is bootstrapped from local JAR.
-        -->        
-        <dependency>
-           <groupId>com.variant</groupId>
-           <artifactId>variant-core</artifactId>
-           <version>${variant.version}</version>
-    		<scope>system</scope>
-		    <systemPath>${project.basedir}/lib/variant-core-${variant.version}.jar</systemPath>
-        </dependency>
- 
-        <!-- 
-		   Alternatively, can be installed in the local Maven repository manually:
-
-           mvn install:install-file -Dfile=lib/variant-core-${variant.version}.jar -DgroupId=com.variant \
-                -DartifactId=variant-core -Dversion=${variant.version} -Dpackaging=jar
-
-        <dependency>
-           <groupId>com.variant</groupId>
-           <artifactId>variant-core</artifactId>
-           <version>${variant.version}</version>
-        </dependency>
-        -->
-
         <!-- Logging -->
         <dependency>
 		    <groupId>org.slf4j</groupId>

@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigValue;
 import com.typesafe.config.ConfigValueType;
-import com.variant.core.error.VariantException;
-import com.variant.core.schema.Variation.Experience;
+import com.variant.share.error.VariantException;
+import com.variant.share.schema.Variation.Experience;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
 

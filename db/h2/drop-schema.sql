@@ -1,7 +1,7 @@
-DROP VIEW events_v;
+DROP VIEW IF EXISTS events_v;
 
-DROP TABLE events CASCADE;
+DROP TABLE IF EXISTS events CASCADE;
  
-DROP TABLE event_experiences CASCADE;
+DROP TABLE IF EXISTS event_experiences CASCADE;
 
-DROP TABLE event_params;
+DROP TABLE IF EXISTS event_params;
