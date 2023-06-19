@@ -1,10 +1,9 @@
 package com.variant.extapi.std.flush;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which discards trace events.

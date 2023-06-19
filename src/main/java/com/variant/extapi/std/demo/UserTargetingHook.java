@@ -1,15 +1,14 @@
 package com.variant.extapi.std.demo;
 
-import java.util.Arrays;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.typesafe.config.Config;
 import com.variant.server.api.Session;
 import com.variant.server.api.lifecycle.LifecycleHook;
 import com.variant.server.api.lifecycle.VariationQualificationLifecycleEvent;
+import com.variant.server.api.lifecycle.VariationTargetingLifecycleEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 
 /**
@@ -20,24 +19,24 @@ import com.variant.server.api.lifecycle.VariationQualificationLifecycleEvent;
  * </code>
  * 
  */
-public class UserQualifyingHook implements LifecycleHook<VariationQualificationLifecycleEvent> {
+public class UserTargetingHook implements LifecycleHook<VariationTargetingLifecycleEvent> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserQualifyingHook.class);
-	
+	private static final Logger LOG = LoggerFactory.getLogger(UserTargetingHook.class);
+
 	private final String[] blackList;
-	
-	public UserQualifyingHook(String init) {
+
+	public UserTargetingHook(String init) {
 		blackList = new String[0];
 		//blackList = config.getList("blackList").stream().map(e -> e.unwrapped()).toArray(String[]::new);
 	}
 
 	@Override
-	public Class<VariationQualificationLifecycleEvent> getLifecycleEventClass() {
-		return VariationQualificationLifecycleEvent.class;
+	public Class<VariationTargetingLifecycleEvent> getLifecycleEventClass() {
+		return VariationTargetingLifecycleEvent.class;
 	}
 
 	@Override
-	public Optional<VariationQualificationLifecycleEvent.PostResult> post(VariationQualificationLifecycleEvent event) throws Exception {
+	public Optional<VariationTargetingLifecycleEvent.PostResult> post(VariationTargetingLifecycleEvent event) {
 
 		Session ssn = event.getSession();
 		String user = ssn.getAttributes().get("user");
@@ -47,8 +46,8 @@ public class UserQualifyingHook implements LifecycleHook<VariationQualificationL
 		if (blacklisted)
 			LOG.info("Disqualified blacklisted user [" + user + "] from variation " + event.getVariation().getName() + "]");
 		
-		VariationQualificationLifecycleEvent.PostResult result = event.mkPostResult();
-		result.setQualified(!blacklisted);
+		VariationTargetingLifecycleEvent.PostResult result = event.mkPostResult();
+//		result.setQualified(!blacklisted);
 		return Optional.of(result);
 	}
 

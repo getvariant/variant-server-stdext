@@ -10,9 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import java.util.Optional;
 
-import com.typesafe.config.Config;
+import org.yaml.snakeyaml.Yaml;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
@@ -34,25 +33,21 @@ import com.variant.server.api.TraceEventFlusher;
  */
 public class TraceEventFlusherCsv implements TraceEventFlusher {
 	
-	private String fileName = "variant-events.csv";
-	private BufferedWriter out;
-	
-	public TraceEventFlusherCsv(Config config) throws Exception {
-		
-		boolean header = false;
-		
-		if (config != null) {
-			header = Optional.ofNullable(config.getBoolean("header")).orElse(header);
-			fileName = Optional.ofNullable(config.getString("file")).orElse(fileName);		
-		}
-		
-		out = Files.newBufferedWriter(Paths.get(fileName), CREATE, WRITE, TRUNCATE_EXISTING );
+	private BufferedWriter out = null;
+
+	public TraceEventFlusherCsv(String string) throws Exception {
+		Map<String, ?> map = new Yaml().load(string);
+		boolean header = (boolean) map.get("header");
+		String outFileName = (String) map.get("file");
+		out = Files.newBufferedWriter(Paths.get(outFileName), CREATE, WRITE, TRUNCATE_EXISTING );
 
 		if (header) {
-			writeLine(new Object[] {"event_id", "event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control"});
+			writeLine("event_id", "event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control");
 			out.flush();
 		}
-
+	}
+	public TraceEventFlusherCsv() throws Exception {
+		this("{header: false, file: /tmp/variant-events.csv}");
 	}
 
 	/**
@@ -115,5 +110,9 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 		}
 		out.append(System.lineSeparator());
 	}
-	
+
+	public static void main(String[] args) throws Exception {
+		var flusher = new TraceEventFlusherCsv("{header: true, outFileName: /tmp/foo.bar}");
+		System.out.println(flusher);
+	}
 }

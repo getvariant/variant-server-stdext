@@ -1,11 +1,5 @@
 package com.variant.extapi.std.flush.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.Properties;
-
-import com.typesafe.config.Config;
-import com.variant.server.api.ServerException;
 import com.variant.server.api.TraceEventFlusher;
 
 /**
@@ -25,41 +19,12 @@ import com.variant.server.api.TraceEventFlusher;
  * @since 0.5
  */
 public class TraceEventFlusherPostgres extends TraceEventFlusherJdbc {
-	
-	private Connection conn = null;
-
-	public TraceEventFlusherPostgres(Config config) throws Exception {
-				
-		String url = config.getString("url");
-		if (url == null) throw new ServerException("Missing configuration property [url]");
-
-
-		String user = config.getString("user");
-		if (user == null) throw new ServerException("Missing configuration property [user]");
-
-		String password = config.getString("password");
-		if (password == null) throw new ServerException("Missing configuration property [password]");
-
-		Properties props = new Properties();
-		props.setProperty("user", user);
-		props.setProperty("password", password);
-		conn = DriverManager.getConnection(url, props);		
-		
+	public TraceEventFlusherPostgres(String init) throws Exception {
+		super(init);
 	}
-
-	@Override
-	public Connection getJdbcConnection() {
-		return conn;
-	}
-
 	@Override
 	protected JdbcVendor getJdbcVendor() {
 		return JdbcVendor.POSTGRES;
-	}
-
-	@Override 
-	public void destroy() throws Exception {
-		if (conn != null) conn.close();
 	}
 
 }

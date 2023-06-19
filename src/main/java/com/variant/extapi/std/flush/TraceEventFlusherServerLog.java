@@ -1,18 +1,14 @@
 package com.variant.extapi.std.flush;
 
-import java.time.format.DateTimeFormatter;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValue;
-import com.typesafe.config.ConfigValueType;
-import com.variant.share.error.VariantException;
-import com.variant.share.schema.Variation.Experience;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
+import com.variant.share.schema.Variation.Experience;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which appends trace events
@@ -35,16 +31,10 @@ public class TraceEventFlusherServerLog implements TraceEventFlusher {
 	private static enum Level {Trace, Debug, Info, Error}
 	private Level level = Level.Info;  // The default.
 
-	public TraceEventFlusherServerLog(Config config) {
-		
-		if (config != null && config.hasPath("level")) {
-			ConfigValue val = config.getValue("level");
-			if (val.valueType() == ConfigValueType.STRING) {
-				level = Level.valueOf((String)val.unwrapped());
-			}
-			else {
-				throw new VariantException("Config property 'level' must be a string, e.g. \"level\":\"info\"");
-			}
+	public TraceEventFlusherServerLog(String init) {
+		if (init != null) {
+			Map<String, ?> initMap = new Yaml().load(init);
+			level = Level.valueOf((String) initMap.get("level"));
 		}
 	}
 

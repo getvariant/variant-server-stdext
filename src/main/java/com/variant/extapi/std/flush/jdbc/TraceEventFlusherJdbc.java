@@ -1,12 +1,12 @@
 package com.variant.extapi.std.flush.jdbc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Map;
+import java.util.Properties;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import com.variant.server.api.ServerException;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
@@ -21,23 +21,55 @@ import com.variant.server.api.TraceEventFlusher;
  *
  */
 abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
-				
+
+	public final Connection connection;
+
 	/**
-	 * Concrete subclass tells this class how to obtain a connection to its flavor of JDBC.
-	 * JUnits will also use this to create the database schema. Subclasses should take care
-	 * of creating the connection only once and cacheing it. 
-	 * 
-	 * @return
-	 * @throws Exception
+	 * The required database schema can be created by the
+	 * {@code create-schema.sql} SQL script, included with Variant server.
+	 * <p>
+	 * Configuration.<br/>You may use the <code>variant.event.flusher.class.init</code> configuration property to pass configuration details to this object.
+	 *
+	 * <ul>
+	 *  <li><code>url</code> - specifies the JDBC URL to the database.
+	 *  <li><code>user</code> - the database user.
+	 *  <li><code>password</code> - the database user's password.
+	 * </ul>
+	 * Example:<br/>
+	 * <code>variant.event.flusher.class.init = {url:"jdbc:h2:mem:variant;MVCC=true;DB_CLOSE_DELAY=-1;", user: variant, password: variant}</code>
+	 *
+	 * @since 0.5
 	 */
-	public abstract Connection getJdbcConnection();
+	protected TraceEventFlusherJdbc(String init) throws SQLException {
+		Config config = ConfigFactory.parseString(init);
+
+		String url = config.getString("url");
+		if (url == null) throw new ServerException("Missing configuration property [url]");
+
+
+		String user = config.getString("user");
+		if (user == null) throw new ServerException("Missing configuration property [user]");
+
+		String password = config.getString("password");
+		if (password == null) throw new ServerException("Missing configuration property [password]");
+
+		Properties props = new Properties();
+		props.setProperty("user", user);
+		props.setProperty("password", password);
+		connection = DriverManager.getConnection(url, props);
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		connection.close();
+	}
 
 	/**
 	 * Implementations will know the vendor.
 	 * @return
 	 */
 	protected abstract JdbcVendor getJdbcVendor();
-			 
+
 	/**
 	 * Persist a collection of events.
 	 */
@@ -54,7 +86,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 				"INSERT INTO event_attributes (event_id, name, value) VALUES (?, ?, ?)";
 
 		JdbcAdapter.executeUpdate(
-			getJdbcConnection(), 
+			connection,
 			new JdbcAdapter.UpdateOperation() {
 
 				@Override

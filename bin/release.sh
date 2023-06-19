@@ -1,8 +1,7 @@
 #!/bin/bash
 #
 # Build server extension API standard library.
-# 
-
+#
 
 version=0.10.3
 root_dir=$(cd $(dirname $0)/..; pwd)
@@ -12,10 +11,11 @@ cd $root_dir
 # Build and package.
 mvn clean package
 
-# Unpackage the JAR and add the /db directory to it.
-# This way these scripts to be easily discoverable by server tests.
+# Un-package the JAR and add the /db directory to it. /db directory contains DB related SQL and shell
+# scripts that are used by tests.
 jar -uf target/variant-extapi-standard-${version}.jar $(find db)
 
-# Copy the new buid into the server's distr directory.
-# assuming the location of the variant local repo.
-cp target/variant-extapi-standard-${version}.jar ../../variant/SERVER/src/universal/ext
+# Copy the new build into the server's distribution directory. Assuming the location of the variant
+# local repo.
+cp target/variant-extapi-standard-${version}.jar ../variant/SERVER/src/universal/ext
+cp target/variant-extapi-standard-${version}.jar ../variant/SERVER/lib
