@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.typesafe.config.Config;
 import com.variant.server.api.Session;
 import com.variant.server.api.lifecycle.LifecycleHook;
 import com.variant.server.api.lifecycle.VariationQualificationLifecycleEvent;
@@ -20,15 +19,14 @@ import com.variant.server.api.lifecycle.VariationQualificationLifecycleEvent;
  * </code>
  * 
  */
-public class UserQualifyingHook implements LifecycleHook<VariationQualificationLifecycleEvent> {
+public class UserQualificationHook implements LifecycleHook<VariationQualificationLifecycleEvent> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserQualifyingHook.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserQualificationHook.class);
 	
 	private final String[] blackList;
 	
-	public UserQualifyingHook(String init) {
-		blackList = new String[0];
-		//blackList = config.getList("blackList").stream().map(e -> e.unwrapped()).toArray(String[]::new);
+	public UserQualificationHook(String init) {
+		blackList = init.split(",");
 	}
 
 	@Override
@@ -41,8 +39,8 @@ public class UserQualifyingHook implements LifecycleHook<VariationQualificationL
 
 		Session ssn = event.getSession();
 		String user = ssn.getAttributes().get("user");
-		
-		boolean blacklisted = Arrays.stream(blackList).filter(d -> user.equals(d)).findFirst().isPresent();
+		if (user == null) throw new RuntimeException("Session attribute 'user' must be set");
+		boolean blacklisted = Arrays.asList(blackList).contains(user);
 
 		if (blacklisted)
 			LOG.info("Disqualified blacklisted user [" + user + "] from variation " + event.getVariation().getName() + "]");
