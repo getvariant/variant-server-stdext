@@ -16,24 +16,24 @@
     	
     </properties>
 
-    <name>Variant Server Standard Extension</name>
+    <name>Variant Server Standard SPI Standard Library</name>
     <packaging>jar</packaging>
 
     <groupId>com.variant</groupId>
-    <artifactId>variant-extapi-standard</artifactId>
+    <artifactId>variant-spi-stdlib</artifactId>
     <version>${variant.version}</version>
     
     <dependencies>
         
         <!-- 
-             Variant Extension API is bootstrapped from local JAR.
+             Variant SPI is bootstrapped from local JAR.
          --> 
 		<dependency>
     		<groupId>com.variant</groupId>
-    		<artifactId>variant-server-extapi</artifactId>
+    		<artifactId>variant-spi</artifactId>
     		<version>${variant.version}</version>
     		<scope>system</scope>
-		    <systemPath>${project.basedir}/lib/variant-server-extapi-${variant.version}.jar</systemPath>
+		    <systemPath>${project.basedir}/lib/variant-server-spi-${variant.version}.jar</systemPath>
 		</dependency>
 
         <!-- 
