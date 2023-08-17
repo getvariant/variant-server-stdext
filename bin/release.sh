@@ -17,5 +17,5 @@ jar -uf target/variant-spi-stdlib-${version}.jar $(find db)
 
 # Copy the new build into the server's distribution directory. Assuming the location of the variant
 # local repo.
-cp target/variant-spi-stdlib-${version}.jar ../variant/SERVER/src/universal/ext
+cp target/variant-spi-stdlib-${version}.jar ../variant/SERVER/src/universal/spi
 cp target/variant-spi-stdlib-${version}.jar ../variant/SERVER/lib
