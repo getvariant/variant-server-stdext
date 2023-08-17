@@ -1,4 +1,4 @@
-package com.variant.extapi.std.flush.jdbc;
+package com.variant.spi.stdlib.flush.jdbc;
 
 import java.sql.*;
 import java.util.Map;

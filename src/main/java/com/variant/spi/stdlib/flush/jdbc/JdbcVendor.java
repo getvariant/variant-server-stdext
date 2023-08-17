@@ -1,4 +1,4 @@
-package com.variant.extapi.std.flush.jdbc;
+package com.variant.spi.stdlib.flush.jdbc;
 
 /**
  * The JDBC vendors we support.

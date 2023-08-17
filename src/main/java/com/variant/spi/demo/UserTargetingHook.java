@@ -1,4 +1,4 @@
-package com.variant.extapi.std.demo;
+package com.variant.spi.demo;
 
 import com.variant.server.api.Session;
 import com.variant.server.api.lifecycle.VariationTargetingLifecycleEvent;

@@ -1,4 +1,4 @@
-package com.variant.extapi.std.demo;
+package com.variant.spi.demo;
 
 import java.util.Arrays;
 import java.util.Optional;

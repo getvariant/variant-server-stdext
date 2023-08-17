@@ -1,4 +1,4 @@
-package com.variant.extapi.std.flush;
+package com.variant.spi.stdlib.flush;
 
 import com.variant.server.api.FlushableTraceEvent;
 import com.variant.server.api.TraceEventFlusher;
