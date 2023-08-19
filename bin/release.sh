@@ -3,7 +3,7 @@
 # Build server extension API standard library.
 #
 
-version=0.10.3
+version=1.0.0
 root_dir=$(cd $(dirname $0)/..; pwd)
 
 cd $root_dir
