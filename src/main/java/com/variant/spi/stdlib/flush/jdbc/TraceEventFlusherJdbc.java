@@ -10,6 +10,8 @@ import com.variant.server.spi.ServerException;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -102,9 +104,9 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 						stmt.setString(2, event.getSessionId());
 						stmt.setTimestamp(3, Timestamp.from(event.getTimestamp()));
 						stmt.setString(4, event.getName());
-						stmt.addBatch();
+						stmt.execute();
+						stmt.clearParameters();
 					}
-					stmt.executeBatch();
 					stmt.close();
 					conn.commit();
 
@@ -118,10 +120,10 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 							stmt.setString(1, event.getId());
 							stmt.setString(2, param.getKey());
 							stmt.setString(3, param.getValue());
-							stmt.addBatch();
+							stmt.execute();
+							stmt.clearParameters();
 						}
 					}
-					stmt.executeBatch();
 					stmt.close();
 					
 					//
@@ -135,12 +137,13 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 							stmt.setString(2, exp.getVariation().getName());
 							stmt.setString(3, exp.getName());
 							stmt.setBoolean(4, exp.isControl());						
-							stmt.addBatch();
+							stmt.execute();
+							stmt.clearParameters();
 						}
 					}
-					
-					stmt.executeBatch();					
 					stmt.close();
+
+					conn.commit();
 				}
 			}
 		);
