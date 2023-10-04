@@ -14,8 +14,8 @@ import java.util.Optional;
 
 import org.yaml.snakeyaml.Yaml;
 import com.variant.share.schema.Variation.Experience;
-import com.variant.server.api.FlushableTraceEvent;
-import com.variant.server.api.TraceEventFlusher;
+import com.variant.server.spi.FlushableTraceEvent;
+import com.variant.server.spi.TraceEventFlusher;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to a local CSV file. 
@@ -50,7 +50,7 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 				.orElse(Map.of());
 		out = Files.newBufferedWriter(Paths.get(parseFileName(map)), CREATE, WRITE, TRUNCATE_EXISTING );
 		if (parseHeader(map)) {
-			writeLine("event_id", "event_name", "created_on", "session_id", "attributes", "variation", "experience", "is_control");
+			writeLine("event_id", "event_name", "created_on", "session_id", "owner", "attributes", "variation", "experience", "is_control");
 			out.flush();
 		}
 	}
@@ -79,6 +79,7 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 					event.getName(),
 					DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp()),
 					event.getSessionId(),
+					event.getSessionOwner().orElse(""),
 					attrs,
 					e.getVariation().getName(),
 					e.getName(),

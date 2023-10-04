@@ -1,6 +1,6 @@
 package com.variant.spi.stdlib.flush.jdbc;
 
-import com.variant.server.api.TraceEventFlusher;
+import com.variant.server.spi.TraceEventFlusher;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 

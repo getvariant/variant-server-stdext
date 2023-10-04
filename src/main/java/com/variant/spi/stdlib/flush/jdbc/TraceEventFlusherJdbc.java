@@ -6,10 +6,10 @@ import java.util.Properties;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import com.variant.server.api.ServerException;
+import com.variant.server.spi.ServerException;
 import com.variant.share.schema.Variation.Experience;
-import com.variant.server.api.FlushableTraceEvent;
-import com.variant.server.api.TraceEventFlusher;
+import com.variant.server.spi.FlushableTraceEvent;
+import com.variant.server.spi.TraceEventFlusher;
 
 
 /**
@@ -82,7 +82,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 		final String INSERT_EVENT_EXPERIENCES_SQL = 
 				"INSERT INTO event_experiences (event_id, variation_name, experience_name, is_control) VALUES (?, ?, ?, ?)"; 
 
-		final String INSERT_EVENT_PARAMETERS_SQL = 
+		final String INSERT_EVENT_ATTRIBUTES_SQL =
 				"INSERT INTO event_attributes (event_id, name, value) VALUES (?, ?, ?)";
 
 		JdbcAdapter.executeUpdate(
@@ -93,40 +93,34 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 				public void execute(Connection conn) throws SQLException {
 
 					//
-					// 1. Insert into EVENTS and get the sequence generated IDs back.
+					// 1. Insert into EVENTS.
 					//
-					
 					PreparedStatement stmt = conn.prepareStatement(INSERT_EVENTS_SQL, Statement.RETURN_GENERATED_KEYS);
-
 					for (int i = 0; i < size; i++) {
 						FlushableTraceEvent event = events[i];
 						stmt.setString(1, event.getId());
 						stmt.setString(2, event.getSessionId());
 						stmt.setTimestamp(3, Timestamp.from(event.getTimestamp()));
 						stmt.setString(4, event.getName());
-
 						stmt.addBatch();
 					}
-					
-					// Send rows to the database.
 					stmt.executeBatch();
 					stmt.close();
+					conn.commit();
 
 					//
-					// 2. Insert into EVENT_PARAMETERS.
+					// 2. Insert into EVENT_ATTRIBUTES.
 					//
-					stmt = conn.prepareStatement(INSERT_EVENT_PARAMETERS_SQL);
+					stmt = conn.prepareStatement(INSERT_EVENT_ATTRIBUTES_SQL);
 					for (int i = 0; i < size; i++) {
 						FlushableTraceEvent event = events[i];
 						for (Map.Entry<String, String> param: event.getAttributes().entrySet()) {
 							stmt.setString(1, event.getId());
 							stmt.setString(2, param.getKey());
-							stmt.setString(3, param.getValue().toString());
-
+							stmt.setString(3, param.getValue());
 							stmt.addBatch();
 						}
 					}
-					
 					stmt.executeBatch();
 					stmt.close();
 					

@@ -1,7 +1,7 @@
 package com.variant.spi.stdlib.flush;
 
-import com.variant.server.api.FlushableTraceEvent;
-import com.variant.server.api.TraceEventFlusher;
+import com.variant.server.spi.FlushableTraceEvent;
+import com.variant.server.spi.TraceEventFlusher;
 import com.variant.share.schema.Variation.Experience;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
