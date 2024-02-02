@@ -1,2 +1,2 @@
 # Variant CVM Server SPI Standard Library
-### Release 1.0.0
+### Release 1.0.1

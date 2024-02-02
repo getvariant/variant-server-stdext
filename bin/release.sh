@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Build server extension API standard library.
+# Build server SPI standard library.
 #
 
 version=1.0.1-RC1
