@@ -12,7 +12,7 @@
     
 	<properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
-        <variant.version>1.0.1-RC1</variant.version>
+        <variant.version>1.2.0</variant.version>
     	
     </properties>
 

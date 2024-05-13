@@ -50,7 +50,7 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 				.orElse(Map.of());
 		out = Files.newBufferedWriter(Paths.get(parseFileName(map)), CREATE, WRITE, TRUNCATE_EXISTING );
 		if (parseHeader(map)) {
-			writeLine("event_id", "event_name", "created_on", "session_id", "owner", "attributes", "variation", "experience", "is_control");
+			writeLine("event_id", "event_name", "created_on", "session_id", "owner", "live_experiences", "attributes");
 			out.flush();
 		}
 	}
@@ -64,27 +64,40 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 		for (int i = 0; i < size; i++) {
 
 			FlushableTraceEvent event = events[i];
-			StringBuilder attrsBuffer = new StringBuilder();
+			StringBuilder stringBuilder = new StringBuilder();
+
+			// Attributes
 			boolean first = true;
+			stringBuilder.append("{");
 			for (Map.Entry<String, String> param: event.getAttributes().entrySet()) {
 				if (first) first = false;
-				else attrsBuffer.append(';');
-				attrsBuffer.append(param.getKey()).append('=').append(param.getValue());
+				else stringBuilder.append(',');
+				stringBuilder.append(param.getKey()).append(':').append(param.getValue());
 			}
-			String attrs = attrsBuffer.toString();
-			
-			for (Experience e: event.getLiveExperiences()) {
-				writeLine(
-					event.getId(),
-					event.getName(),
-					DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp()),
-					event.getSessionId(),
-					event.getSessionOwner().orElse(""),
-					attrs,
-					e.getVariation().getName(),
-					e.getName(),
-					e.isControl());
+			stringBuilder.append("}");
+			String attrs = stringBuilder.toString();
+
+			// Live experiences
+			stringBuilder.setLength(0);
+			first = true;
+			stringBuilder.append("[");
+			for (Experience le: event.getLiveExperiences()) {
+				if (first) first = false;
+				else stringBuilder.append(",");
+				stringBuilder.append(le.toString()); // prints varname.expname
 			}
+			stringBuilder.append("]");
+
+			String liveExperiences = stringBuilder.toString();
+
+			writeLine(
+				event.getId(),
+				event.getName(),
+				DateTimeFormatter.ISO_INSTANT.format(event.getTimestamp()),
+				event.getSessionId(),
+				event.getSessionOwner().orElse("?"),
+				liveExperiences,
+				attrs);
 		}
 		out.flush();
 	}
