@@ -3,7 +3,7 @@
 # Build server SPI standard library.
 #
 
-version=1.3.0
+version=1.3.1
 root_dir=$(cd $(dirname $0)/..; pwd)
 
 cd $root_dir
