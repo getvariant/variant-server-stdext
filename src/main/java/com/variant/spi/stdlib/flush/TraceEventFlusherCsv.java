@@ -12,17 +12,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
 
+import com.variant.share.yaml.YamlMap;
+import com.variant.share.yaml.YamlNode;
+import com.variant.share.yaml.YamlScalar;
 import org.yaml.snakeyaml.Yaml;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
+import org.yaml.snakeyaml.nodes.ScalarNode;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to a local CSV file. 
  * The output file format conforms to the <a href="https://tools.ietf.org/html/rfc4180">IETF RFC4180</a>
  * 
  * Configuration.
- * A YAML string containing these properties:
+ * A required YAML map containing these keys:
  * <ul>
  *  <li><code>header</code> - boolean - Whether or not to include the header as very first line.
  *                            Optional, defaults to <code>true</code>.
@@ -33,8 +37,10 @@ import com.variant.server.spi.TraceEventFlusher;
  * Example:<br/>
  * <code>
  *   flusher:
- *     class: com.variant.spi.stdlib.TraceEventFlusherCsv
- *     init: '{file: /tmp/variant-events.csv, header: false}'
+ *     class: com.variant.spi.stdlib.flush.TraceEventFlusherCsv
+ *     init:
+ *       file: /tmp/variant-events.csv
+ *       header: false
  * </code>
  * 
  * @since 0.10
@@ -43,16 +49,48 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 	
 	private BufferedWriter out = null;
 
-	public TraceEventFlusherCsv(String init) throws Exception {
-		Map<String, ?> map =
+	public TraceEventFlusherCsv(YamlNode<?> init) throws Exception {
+		Map<String, YamlNode<?>> map =
 			Optional.ofNullable(init)
-				.map(string->(Map<String,?>)new Yaml().load(string))
+				.map(node -> ((YamlMap)node).value())
 				.orElse(Map.of());
 		out = Files.newBufferedWriter(Paths.get(parseFileName(map)), CREATE, WRITE, TRUNCATE_EXISTING );
 		if (parseHeader(map)) {
 			writeLine("event_id", "event_name", "created_on", "session_id", "owner", "live_experiences", "attributes");
 			out.flush();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private Boolean parseHeader(Map<String, YamlNode<?>> map) {
+		return Optional.ofNullable(map.get("header"))
+			.map(node -> ((YamlScalar<Boolean>)node).value())
+			.orElse(true);
+	}
+
+	@SuppressWarnings("unchecked")
+	private String parseFileName(Map<String, YamlNode<?>> map) {
+		return Optional.ofNullable(map.get("file"))
+			.map(node -> ((YamlScalar<String>)node).value())
+			.orElse("log/trace-events.csv");
+	}
+
+	/**
+	 * Enclose the string in double quotes. If a double quote already occurs in the string,
+	 * double it, as per the RFC
+	 */
+	private String quoteString(String raw) {
+		return "\"" + raw.replaceAll("\\\"", "\"\"") + "\"";
+	}
+
+	private void writeLine(Object...tokens) throws IOException {
+		boolean first = true;
+		for (Object token: tokens) {
+			if (first) first = false;
+			else out.append(',');
+			out.append(quoteString(token.toString()));
+		}
+		out.append(System.lineSeparator());
 	}
 
 	/**
@@ -108,37 +146,5 @@ public class TraceEventFlusherCsv implements TraceEventFlusher {
 	@Override
 	public void destroy() throws Exception {
 		out.close();
-	}
-
-	private Boolean parseHeader(Map<String, ?> map) {
-		final var defaultValue = true;
-		return Optional.ofNullable(map.get("header")).map(token->(boolean)token).orElse(defaultValue);
-	}
-
-	private String parseFileName(Map<String, ?> map) {
-		final var defaultValue = "log/trace-events.csv";
-		return Optional.ofNullable(map.get("file")).map(token->(String)token).orElse(defaultValue);
-	}
-
-	/**
-	 * Enclose the string in double quotes. If a double quote already occurs in the string, 
-	 * double it, as per the RFC
-	 */
-	private String quoteString(String raw) {
-		return "\"" + raw.replaceAll("\\\"", "\"\"") + "\"";
-	}
-	
-	private void writeLine(Object...tokens) throws IOException {
-		boolean first = true;
-		for (Object token: tokens) {
-			if (first) first = false;
-			else out.append(',');
-			out.append(quoteString(token.toString()));
-		}
-		out.append(System.lineSeparator());
-	}
-	public static void main(String[] args) throws Exception {
-		var flusher = new TraceEventFlusherCsv("{header: true, outFileName: /tmp/foo.bar}");
-		System.out.println(flusher);
 	}
 }

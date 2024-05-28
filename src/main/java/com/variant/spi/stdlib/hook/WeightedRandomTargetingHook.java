@@ -1,19 +1,16 @@
-package com.variant.spi.stdlib.lifecycle;
+package com.variant.spi.stdlib.hook;
 
-import com.variant.server.boot.ServerExceptionInternal;
 import com.variant.server.spi.TargetingLifecycleEvent;
 import com.variant.server.spi.TargetingLifecycleHook;
 import com.variant.share.schema.State;
 import com.variant.share.schema.Variation;
-import org.yaml.snakeyaml.nodes.MappingNode;
-import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeTuple;
-import org.yaml.snakeyaml.nodes.ScalarNode;
+import com.variant.share.yaml.YamlMap;
+import com.variant.share.yaml.YamlNode;
+import com.variant.share.yaml.YamlScalar;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * Targets randomly, honoring weights, which must be supplied in experience properties like so:
@@ -44,12 +41,16 @@ public class WeightedRandomTargetingHook implements TargetingLifecycleHook {
   public WeightedRandomTargetingHook() {
     propName = "weight";
   }
-  public WeightedRandomTargetingHook(Node node) {
-    this.propName = ((MappingNode)node).getValue().stream()
-      .filter(nt -> ((ScalarNode)nt.getKeyNode()).getValue().equals("key"))
-      .map(nt -> ((ScalarNode)nt.getValueNode()).getValue())
-      .findAny()
-      .orElseThrow(() -> new RuntimeException("Unable to parse init " + node));
+  public WeightedRandomTargetingHook(YamlNode<?> node) {
+    var valOpt = Optional.ofNullable(((YamlMap) node).value().get("key"));
+    propName =  valOpt
+      .map(scalar -> ((YamlScalar<String>)scalar).value())
+      .orElseThrow(
+        () ->
+          new RuntimeException(
+            "Unable to value [%s] to a string literal"
+              .formatted("foo"))
+      );
   }
   private static Random rand = new Random();
 

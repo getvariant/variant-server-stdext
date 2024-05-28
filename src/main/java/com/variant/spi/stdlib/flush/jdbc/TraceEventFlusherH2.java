@@ -1,9 +1,11 @@
 package com.variant.spi.stdlib.flush.jdbc;
 
 
+import com.variant.share.yaml.YamlNode;
+
 public class TraceEventFlusherH2 extends TraceEventFlusherJdbc {
 
-	public TraceEventFlusherH2(String init) throws Exception {
+	public TraceEventFlusherH2(YamlNode<?> init) throws Exception {
 		super(init);
 	}
 

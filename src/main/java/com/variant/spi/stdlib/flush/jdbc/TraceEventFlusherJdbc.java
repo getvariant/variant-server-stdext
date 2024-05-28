@@ -10,6 +10,9 @@ import com.variant.server.spi.ServerException;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
+import com.variant.share.yaml.YamlMap;
+import com.variant.share.yaml.YamlNode;
+import com.variant.share.yaml.YamlScalar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +33,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 	 * The required database schema can be created by the
 	 * {@code create-schema.sql} SQL script, included with Variant server.
 	 * <p>
-	 * Configuration.<br/>You may use the <code>variant.event.flusher.class.init</code> configuration property to pass configuration details to this object.
+	 * Configuration.<br/>You may use the <code>/flusher.init</code> key to pass configuration details to this object.
 	 *
 	 * <ul>
 	 *  <li><code>url</code> - specifies the JDBC URL to the database.
@@ -42,17 +45,15 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 	 *
 	 * @since 0.5
 	 */
-	protected TraceEventFlusherJdbc(String init) throws SQLException {
-		Config config = ConfigFactory.parseString(init);
+	@SuppressWarnings("unchecked")
+	protected TraceEventFlusherJdbc(YamlNode<?> init) throws SQLException {
 
-		String url = config.getString("url");
+		Map<String, YamlNode<?>> initMap = ((YamlMap) init).value();
+		String url = ((YamlScalar<String>)initMap.get("url")).value();
 		if (url == null) throw new ServerException("Missing configuration property [url]");
-
-
-		String user = config.getString("user");
+		String user = ((YamlScalar<String>)initMap.get("user")).value();
 		if (user == null) throw new ServerException("Missing configuration property [user]");
-
-		String password = config.getString("password");
+		String password = ((YamlScalar<String>)initMap.get("password")).value();;
 		if (password == null) throw new ServerException("Missing configuration property [password]");
 
 		Properties props = new Properties();

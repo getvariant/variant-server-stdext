@@ -1,6 +1,7 @@
 package com.variant.spi.stdlib.flush.jdbc;
 
 import com.variant.server.spi.TraceEventFlusher;
+import com.variant.share.yaml.YamlNode;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to an 
@@ -19,7 +20,7 @@ import com.variant.server.spi.TraceEventFlusher;
  * @since 0.5
  */
 public class TraceEventFlusherPostgres extends TraceEventFlusherJdbc {
-	public TraceEventFlusherPostgres(String init) throws Exception {
+	public TraceEventFlusherPostgres(YamlNode<?> init) throws Exception {
 		super(init);
 	}
 	@Override

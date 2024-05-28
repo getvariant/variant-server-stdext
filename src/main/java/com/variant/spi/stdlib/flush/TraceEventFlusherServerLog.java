@@ -3,12 +3,16 @@ package com.variant.spi.stdlib.flush;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
 import com.variant.share.schema.Variation.Experience;
+import com.variant.share.yaml.YamlMap;
+import com.variant.share.yaml.YamlNode;
+import com.variant.share.yaml.YamlScalar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which appends trace events
@@ -16,12 +20,18 @@ import java.util.Map;
  * which is completely independent of the operational environment. Probably not for production use. 
  * <p>
  * Configuration.
+ * An optional YAML map containing a single key:
  * <ul>
- * <li><code>level</code> - specifies the logging level to be used. Defaults to 'INFO'.<br/>
+ * <li><code>level</code> - string -- The logging level to be used.
  * </ul>
  * Example:<br/>
- * <code>variant.event.flusher.class.init = {level="INFO"}</code>
- * 
+ * <code>
+ *   flusher:
+ *     class: com.variant.spi.stdlib.flush.TraceEventFlusherServerLog
+ *     init:
+ *       level: Info
+ * </code>
+ * If no init is specified, Info is assumed.
  * 
  * @since 0.5
  */
@@ -29,13 +39,19 @@ public class TraceEventFlusherServerLog implements TraceEventFlusher {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(TraceEventFlusherServerLog.class);
 	private static enum Level {Trace, Debug, Info, Error}
-	private Level level = Level.Info;  // The default.
+	private final Level level;
 
-	public TraceEventFlusherServerLog(String init) {
-		if (init != null) {
-			Map<String, ?> initMap = new Yaml().load(init);
-			level = Level.valueOf((String) initMap.get("level"));
-		}
+	/**
+	 * Init is either null, or has a single string
+	 */
+	public TraceEventFlusherServerLog(YamlNode<?> init) {
+		level = Optional.ofNullable(init)
+			.map(node -> {
+				var map = ((YamlMap)node).value();
+				var levelStr = ((YamlScalar<String>)map.get("level")).value();
+				return Level.valueOf(levelStr);
+			})
+			.orElse(Level.Info);
 	}
 
 	@Override
