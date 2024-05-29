@@ -50,8 +50,8 @@ public class WeightedRandomTargetingHook implements TargetingLifecycleHook {
                   if (valueNode instanceof YamlScalar<?> scalarNode && scalarNode.value() instanceof String string) {
                     return string;
                   } else {
-                    throw new VariantException(
-                      "Unable to value [%s] to a string literal".formatted(valueNode));
+                    // Ignore location part of the message
+                    throw new VariantException("Value is not a string literal");
                   }
                 }
               )
