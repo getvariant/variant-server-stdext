@@ -2,6 +2,7 @@ package com.variant.spi.stdlib.hook;
 
 import com.variant.server.spi.TargetingLifecycleEvent;
 import com.variant.server.spi.TargetingLifecycleHook;
+import com.variant.share.error.VariantException;
 import com.variant.share.schema.State;
 import com.variant.share.schema.Variation;
 import com.variant.share.yaml.YamlMap;
@@ -36,21 +37,36 @@ import java.util.Random;
  */
 public class WeightedRandomTargetingHook implements TargetingLifecycleHook {
 
-  final private String propName;
+  private String propName = "weight";
 
-  public WeightedRandomTargetingHook() {
-    propName = "weight";
-  }
-  public WeightedRandomTargetingHook(YamlNode<?> node) {
-    var valOpt = Optional.ofNullable(((YamlMap) node).value().get("key"));
-    propName =  valOpt
-      .map(scalar -> ((YamlScalar<String>)scalar).value())
-      .orElseThrow(
-        () ->
-          new RuntimeException(
-            "Unable to value [%s] to a string literal"
-              .formatted("foo"))
+  public WeightedRandomTargetingHook(YamlNode<?> init) {
+    Optional.ofNullable(init)
+      .ifPresentOrElse (
+        node -> {
+          if (node instanceof YamlMap mapNode) {
+            propName = Optional.ofNullable(mapNode.value().get("key"))
+              .map(
+                valueNode -> {
+                  if (valueNode instanceof YamlScalar<?> scalarNode && scalarNode.value() instanceof String string) {
+                    return string;
+                  } else {
+                    throw new VariantException(
+                      "Unable to value [%s] to a string literal".formatted(valueNode));
+                  }
+                }
+              )
+              .orElseThrow(
+                () -> new VariantException(
+                  "Required key 'key' not found in the initializer map"));
+          }
+          else {
+            throw new VariantException("The hook initializer must be a YAML map");
+          }
+        },
+        // No init key was given
+        () -> propName = "weight"
       );
+
   }
   private static Random rand = new Random();
 
@@ -67,7 +83,10 @@ public class WeightedRandomTargetingHook implements TargetingLifecycleHook {
         String.format("No experiences in variation [%s] are defined on state [%s]", var.getName(), state.getName()));
     }
     double weightSum = definedExperiences.stream()
-      .map(e -> Double.parseDouble(e.getParameters().get(propName)))
+      .map(e -> {
+        var val = e.getParameters().get(propName);
+        return Double.parseDouble(e.getParameters().get(propName));
+      })
       .reduce(0D, Double::sum);
 
     double randVal = rand.nextDouble() * weightSum;
