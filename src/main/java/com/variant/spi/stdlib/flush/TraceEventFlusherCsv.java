@@ -15,11 +15,9 @@ import java.util.Optional;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;
 import com.variant.share.yaml.YamlScalar;
-import org.yaml.snakeyaml.Yaml;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
-import org.yaml.snakeyaml.nodes.ScalarNode;
 
 /**
  * An implementation of {@link TraceEventFlusher}, which writes trace events to a local CSV file. 

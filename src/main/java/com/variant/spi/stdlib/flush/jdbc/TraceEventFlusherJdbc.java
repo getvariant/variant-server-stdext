@@ -4,8 +4,6 @@ import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import com.variant.server.spi.ServerException;
 import com.variant.share.schema.Variation.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
@@ -13,8 +11,6 @@ import com.variant.server.spi.TraceEventFlusher;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;
 import com.variant.share.yaml.YamlScalar;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
