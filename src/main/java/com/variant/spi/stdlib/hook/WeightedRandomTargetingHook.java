@@ -4,7 +4,7 @@ import com.variant.server.spi.TargetingLifecycleEvent;
 import com.variant.server.spi.TargetingLifecycleHook;
 import com.variant.share.error.VariantException;
 import com.variant.share.schema.State;
-import com.variant.share.schema.Variation;
+import com.variant.share.schema.Experiment;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;
 import com.variant.share.yaml.YamlScalar;
@@ -20,14 +20,14 @@ import java.util.Random;
  *    experiences:
  *      - name: foo
  *        properties:
- *          weight: 1
+ *          weight: '1'     # Quotes because Variant schema parser expects value to be a string
  *      - name: bar
- *          weight: 1.5
+ *          weight: '1.5'
  *      - name: baz
- *          weight: 0.75
+ *          weight: '0.75'
  *  * </pre>
  * By default, looks for the <code>weight</code> experience property, unless overridden in the
- * <code>init</code> key, like so (variation and state params are cas-sensitive):
+ * <code>init</code> key, like so (experiment and state params are cas-sensitive):
  * <pre>
  *   hooks:
  *     - class: com.variant.spi.stdlib.lifecycle.WeightedRandomTargetingHook
@@ -71,16 +71,16 @@ public class WeightedRandomTargetingHook implements TargetingLifecycleHook {
   private static Random rand = new Random();
 
   @Override
-  public Optional<Variation.Experience> post(TargetingLifecycleEvent event) {
+  public Optional<Experiment.Experience> post(TargetingLifecycleEvent event) {
 
-    Variation var = event.getVariation();
+    Experiment var = event.getExperiment();
     State state = event.getState();
-    List<Variation.Experience> definedExperiences = var.getExperiences().stream()
+    List<Experiment.Experience> definedExperiences = var.getExperiences().stream()
       .filter(e -> e.isDefinedOn(state))
       .toList();
     if (definedExperiences.isEmpty()) {
       throw new RuntimeException(
-        String.format("No experiences in variation [%s] are defined on state [%s]", var.getName(), state.getName()));
+        String.format("No experiences in experiment [%s] are defined on state [%s]", var.getName(), state.getName()));
     }
     double weightSum = definedExperiences.stream()
       .map(e -> {
@@ -91,7 +91,7 @@ public class WeightedRandomTargetingHook implements TargetingLifecycleHook {
 
     double randVal = rand.nextDouble() * weightSum;
     weightSum = 0;
-    for (Variation.Experience e: definedExperiences) {
+    for (Experiment.Experience e: definedExperiences) {
       weightSum += Double.parseDouble(e.getParameters().get(propName));
       if (randVal < weightSum) {
         return Optional.of(e);

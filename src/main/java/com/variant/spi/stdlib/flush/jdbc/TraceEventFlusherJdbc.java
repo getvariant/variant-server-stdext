@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.variant.server.spi.ServerException;
-import com.variant.share.schema.Variation.Experience;
+import com.variant.share.schema.Experiment.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
 import com.variant.share.yaml.YamlMap;
@@ -79,7 +79,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 				"INSERT INTO events (id, session_id, created_on, event_name) VALUES (?, ?, ?, ?)";
 
 		final String INSERT_EVENT_EXPERIENCES_SQL = 
-				"INSERT INTO event_experiences (event_id, variation_name, experience_name, is_control) VALUES (?, ?, ?, ?)"; 
+				"INSERT INTO event_experiences (event_id, experiment_name, experience_name, is_control) VALUES (?, ?, ?, ?)";
 
 		final String INSERT_EVENT_ATTRIBUTES_SQL =
 				"INSERT INTO event_attributes (event_id, name, value) VALUES (?, ?, ?)";
@@ -131,7 +131,7 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 						FlushableTraceEvent event = events[i];
 						for (Experience exp: event.getLiveExperiences()) {
 							stmt.setString(1, event.getId());
-							stmt.setString(2, exp.getVariation().getName());
+							stmt.setString(2, exp.getExperiment().getName());
 							stmt.setString(3, exp.getName());
 							stmt.setBoolean(4, exp.isControl());						
 							stmt.execute();

@@ -15,7 +15,7 @@ import java.util.Optional;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;
 import com.variant.share.yaml.YamlScalar;
-import com.variant.share.schema.Variation.Experience;
+import com.variant.share.schema.Experiment.Experience;
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
 

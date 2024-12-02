@@ -2,7 +2,7 @@ package com.variant.spi.stdlib.flush;
 
 import com.variant.server.spi.FlushableTraceEvent;
 import com.variant.server.spi.TraceEventFlusher;
-import com.variant.share.schema.Variation.Experience;
+import com.variant.share.schema.Experiment.Experience;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;
 import com.variant.share.yaml.YamlScalar;
@@ -72,7 +72,7 @@ public class TraceEventFlusherServerLog implements TraceEventFlusher {
    			   if (first) first = false;
    			   else msg.append(", ");
    			   msg.append("{")
-               .append("test_name:'").append(e.getVariation().getName()).append("', ")
+               .append("test_name:'").append(e.getExperiment().getName()).append("', ")
                .append("experience_name:'").append(e.getName()).append("', ")
                .append("is_control:").append(e.isControl())
                .append("}");
