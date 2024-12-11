@@ -4,10 +4,9 @@ import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 
-import com.variant.server.spi.ServerException;
 import com.variant.share.schema.Experiment.Experience;
-import com.variant.server.spi.FlushableTraceEvent;
-import com.variant.server.spi.TraceEventFlusher;
+import com.variant.spi.FlushableTraceEvent;
+import com.variant.spi.TraceEventFlusher;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;
 import com.variant.share.yaml.YamlScalar;
@@ -46,11 +45,11 @@ abstract public class TraceEventFlusherJdbc implements TraceEventFlusher {
 
 		Map<String, YamlNode<?>> initMap = ((YamlMap) init).value();
 		String url = ((YamlScalar<String>)initMap.get("url")).value();
-		if (url == null) throw new ServerException("Missing configuration property [url]");
+		if (url == null) throw new RuntimeException("Missing configuration property [url]");
 		String user = ((YamlScalar<String>)initMap.get("user")).value();
-		if (user == null) throw new ServerException("Missing configuration property [user]");
+		if (user == null) throw new RuntimeException("Missing configuration property [user]");
 		String password = ((YamlScalar<String>)initMap.get("password")).value();;
-		if (password == null) throw new ServerException("Missing configuration property [password]");
+		if (password == null) throw new RuntimeException("Missing configuration property [password]");
 
 		Properties props = new Properties();
 		props.setProperty("user", user);

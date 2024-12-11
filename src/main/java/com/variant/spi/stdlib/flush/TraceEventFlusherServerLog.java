@@ -1,7 +1,7 @@
 package com.variant.spi.stdlib.flush;
 
-import com.variant.server.spi.FlushableTraceEvent;
-import com.variant.server.spi.TraceEventFlusher;
+import com.variant.spi.FlushableTraceEvent;
+import com.variant.spi.TraceEventFlusher;
 import com.variant.share.schema.Experiment.Experience;
 import com.variant.share.yaml.YamlMap;
 import com.variant.share.yaml.YamlNode;

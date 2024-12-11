@@ -1,6 +1,6 @@
 package com.variant.spi.stdlib.flush.jdbc;
 
-import com.variant.server.spi.TraceEventFlusher;
+import com.variant.spi.TraceEventFlusher;
 import com.variant.share.yaml.YamlNode;
 
 /**

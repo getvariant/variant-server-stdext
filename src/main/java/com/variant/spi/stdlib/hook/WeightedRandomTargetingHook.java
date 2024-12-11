@@ -1,7 +1,7 @@
 package com.variant.spi.stdlib.hook;
 
-import com.variant.server.spi.TargetingLifecycleEvent;
-import com.variant.server.spi.TargetingLifecycleHook;
+import com.variant.spi.TargetingLifecycleEvent;
+import com.variant.spi.TargetingLifecycleHook;
 import com.variant.share.error.VariantException;
 import com.variant.share.schema.State;
 import com.variant.share.schema.Experiment;
